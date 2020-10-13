@@ -30,13 +30,13 @@ namespace EmeraldRush.Services.FirebaseDB
 
                 try
                 {
-                    await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).PatchAsync<Player>(player);
+                    await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).Child("user").PatchAsync<Player>(player);
                     Console.WriteLine("send.");
 
                     
-                    playerInstance = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).AsObservable<Player>();
+                    playerInstance = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).AsObservable<Player>();
                     
-                    unsubObject = playerInstance.Where(f=>f.Key.Equals(UserUID)).Subscribe(Job =>
+                    unsubObject = playerInstance.Subscribe(Job =>
                     {
                         
                         Console.WriteLine("JAKIEŚ ZMIANY...");
