@@ -34,19 +34,23 @@ namespace EmeraldRush.Services.FirebaseDB
                     Console.WriteLine("send.");
 
                     
-                    playerInstance = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).AsObservable<Player>();
-                    unsubObject = playerInstance.Subscribe(Job =>
+                    playerInstance = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).AsObservable<Player>();
+                    
+                    unsubObject = playerInstance.Where(f=>f.Key.Equals(UserUID)).Subscribe(Job =>
                     {
+                        
                         Console.WriteLine("JAKIEŚ ZMIANY...");
+                        
                         if (Job.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && !string.IsNullOrEmpty(Job.Object.GameUID))
                         {
-                            // FirebaseGameManager.SubscribeToGame(Job.Object.GameUID);
+                           // FirebaseGameManager.SubscribeToGame(Job.Object.GameUID);
                             Console.WriteLine("Znaleziono gre: " + Job.Object.GameUID);
                             playerInstance = null;
-                            ;
+                            
                         }
 
                     });
+
                     Console.WriteLine("Subscribed to: " + AplicationConstants.USER_LIST + "/" + UserUID);
                     
                     await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.QUEUE).Child(UserUID).PutAsync<String>(type.ToString());

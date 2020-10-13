@@ -8,9 +8,9 @@ namespace EmeraldRush.Services.FirebaseAuthService
 {
     class FirebaseAuthManager
     {
-        public static async Task<bool> Login()
+        public static async Task<string> Login()
         {
-            return await DependencyService.Get<IFirebaseAuthentication>().LoginAnonymous() != string.Empty;
+            return await DependencyService.Get<IFirebaseAuthentication>().LoginAnonymous();
         }
 
         public static bool IsLogged()
@@ -23,13 +23,14 @@ namespace EmeraldRush.Services.FirebaseAuthService
             return DependencyService.Get<IFirebaseAuthentication>().GetUserUID();
         }
 
+
         public static async Task<string> LoginAndGetUID()
         {
             if (IsLogged())
             {
                 return GetUserUID();
             }
-            else if(await Login())
+            else if( await Login() != string.Empty)
             {
                 return GetUserUID();
             }

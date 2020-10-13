@@ -41,7 +41,9 @@ namespace EmeraldRush.Droid.FirebaseAuthService
             try
             {
                 var user = await Firebase.Auth.FirebaseAuth.Instance.SignInAnonymouslyAsync();
+
                 var token = await user.User.GetIdTokenAsync(true);
+
                 return token.Token;
             }
             catch (FirebaseAuthInvalidUserException e)
