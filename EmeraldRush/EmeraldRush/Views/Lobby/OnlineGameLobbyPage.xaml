@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmeraldRush.Views.Lobby.OnlineGameLobbyPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="{Binding LobbyStatus} " />
+
+            <Button Text="2 Player mode" Clicked="PlayerMode_2_Clicked" />
+            <Button Text="4 Player mode" Clicked="PlayerMode_4_Clicked" />
+            <Button Text="8 Player mode" Clicked="PlayerMode_8_Clicked" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

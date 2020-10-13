@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "428443609949",
+    "firebase_url": "https://emeraldrush-d483a.firebaseio.com",
+    "project_id": "emeraldrush-d483a",
+    "storage_bucket": "emeraldrush-d483a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428443609949:android:2d76edd7cdc9ccc20916b4",
+        "android_client_info": {
+          "package_name": "com.Papros.emeraldrush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428443609949-lnorg45rgo23h2gf6kl1s17092il4ae7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Papros.emeraldrush",
+            "certificate_hash": "441be3e1174a730d1bf90df11686d2d4074cc75f"
+          }
+        },
+        {
+          "client_id": "428443609949-63d5s7olu65pli32s2rt8i56gdsit874.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtGc5-__Y1odZ-1zZnPdkA2_RXI-En9FQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428443609949-63d5s7olu65pli32s2rt8i56gdsit874.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
