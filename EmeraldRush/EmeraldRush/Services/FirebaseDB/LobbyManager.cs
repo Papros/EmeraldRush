@@ -25,12 +25,12 @@ namespace EmeraldRush.Services.FirebaseDB
         {
             if(UserUID != string.Empty)
             {
-                Player player = new Player(string.Empty, "Adventurer");
+                Player player = new Player(string.Empty, "Adventurer",UserUID);
                 Console.WriteLine("Sending player to list...");
 
                 try
                 {
-                    await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).Child("user").PatchAsync<Player>(player);
+                    await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).Child("user").PatchAsync(player);
                     Console.WriteLine("send.");
 
                     
@@ -52,8 +52,9 @@ namespace EmeraldRush.Services.FirebaseDB
                     });
 
                     Console.WriteLine("Subscribed to: " + AplicationConstants.USER_LIST + "/" + UserUID);
-                    
-                    await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.QUEUE).Child(UserUID).PutAsync<String>(type.ToString());
+                    QueueToken token = new QueueToken(UserUID, type.ToString());
+                    await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.QUEUE).Child(UserUID).PatchAsync(token);
+                    Console.WriteLine("User set in queue: " + type.ToString());
                     return true;
 
                 }catch( Firebase.Database.FirebaseException ex)
