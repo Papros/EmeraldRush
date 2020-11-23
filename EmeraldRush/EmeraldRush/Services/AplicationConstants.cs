@@ -13,5 +13,8 @@ namespace EmeraldRush.Services
         public static readonly string USER_LIST = "USER_LIST";
         public static readonly string PUBLIC_GAME_DATA = "PUBLIC_DATA";
 
+        public static readonly string GAME_FOUND_MSG = "game_found";
+        public static readonly string GAME_UPDATE_MSG = "update_game";
+
     }
 }

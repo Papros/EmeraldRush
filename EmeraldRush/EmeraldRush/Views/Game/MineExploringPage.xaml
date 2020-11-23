@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmeraldRush.Views.Game.MineExploringPage">
+    <ContentPage.Content>
+
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"  />
+                <RowDefinition Height="20*" />
+                <RowDefinition Height="2*"  />
+                <RowDefinition Height="3*"  />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout 
+                Grid.Row="0"
+                Grid.Column="0"
+                Style="{StaticResource Upper_ui_bar}" >
+                
+                <Frame Style="{StaticResource Upper_label_Container}" >
+                    <Label Text="{Binding MineIndex}" Style="{StaticResource Standard_label}" />
+                </Frame>
+
+                <Frame Style="{StaticResource Upper_label_Container}" >
+                    <Label Text="{Binding Chest}" Style="{StaticResource Standard_label}" />
+                </Frame>
+                
+            </StackLayout>
+
+            <CarouselView 
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource Card_carousel}"
+                ItemsSource="{Binding Nodes}" >
+
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CarouselView.ItemsLayout>
+
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Style="{StaticResource Card_container}">
+                            <Label Text="{Binding Title}" Style="{StaticResource Card_title}"/>
+                            <Image Source="{Binding ImagePath}" Style="{StaticResource Card_style}" />
+                            <Label Text="{Binding CardID}"/>
+                            <Label Text="{Binding EmeraldValue}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+                
+            </CarouselView>
+
+            <StackLayout 
+                Grid.Row="2"
+                Grid.Column="0" 
+                Style="{StaticResource Lower_ui_bar}" >
+
+                <Frame Style="{StaticResource Label_contianer}">
+                    <Label Text="{Binding Pocket}"  Style="{StaticResource Standard_label}"  />
+                </Frame>
+                
+                <Frame Style="{StaticResource Label_contianer}">
+                    <Label Text="{Binding EmeraldsForTake}" Style="{StaticResource Standard_label}"/>
+                </Frame>
+
+            </StackLayout>
+
+            <CarouselView 
+                Grid.Row="3"
+                Grid.Column="0"
+                BackgroundColor="Red"
+                HorizontalScrollBarVisibility="Never"
+                
+                ItemsSource="{Binding Adventurers}" >
+                
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CarouselView.ItemsLayout>
+                
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Style="{StaticResource Player_info_container}">
+                            <Label Text="{Binding name}"/>
+                            <Label Text="{Binding chest}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

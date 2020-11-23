@@ -17,24 +17,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\Game\" />
-    <Folder Include="Views\Game\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\Menu\MainMenuPage.xaml.cs">
       <DependentUpon>MainMenuPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Views\Game\MineExploringPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Game\SubmitScreenPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Lobby\OnlineGameLobbyPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Lobby\SingleGameLobbyPage.xaml">
+    <EmbeddedResource Update="Views\Menu\MainMenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Menu\MainMenuPage.xaml">
+    <EmbeddedResource Update="Views\Menu\SettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
