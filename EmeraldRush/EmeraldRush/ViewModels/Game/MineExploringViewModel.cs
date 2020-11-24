@@ -80,7 +80,7 @@ namespace EmeraldRush.ViewModels.Game
             InitializeObjects();
         }
 
-        private async void InitializeObjects()
+        private void InitializeObjects()
         {
             Console.WriteLine("Initializing...");
            // GameInstance gameInstance = await FirebaseGameManager.GetInstance().GetGame();
@@ -134,8 +134,8 @@ namespace EmeraldRush.ViewModels.Game
 
                 if (gameInstance.GetPlayerData(this.plyerUID) != null)
                 {
-                    this.pocket = gameInstance.GetPlayerData(this.plyerUID).pocket;
-                    this.chest = gameInstance.GetPlayerData(this.plyerUID).chest;
+                    this.Pocket = gameInstance.GetPlayerData(this.plyerUID).pocket;
+                    this.Chest = gameInstance.GetPlayerData(this.plyerUID).chest;
                 }
                 else { Console.WriteLine("Player = null"); }
 

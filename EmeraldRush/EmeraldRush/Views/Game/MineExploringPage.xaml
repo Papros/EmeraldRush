@@ -83,8 +83,8 @@
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Style="{StaticResource Player_info_container}">
-                            <Label Text="{Binding name}"/>
-                            <Label Text="{Binding chest}"/>
+                            <Label Text="{Binding name}" Style="{StaticResource Standard_label}"/>
+                            <Label Text="{Binding chest}" Style="{StaticResource Standard_label}"/>
                         </StackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
