@@ -11,6 +11,7 @@ namespace EmeraldRush.Model.FirebaseModel
         public int CurrentMineID { get; set; }
         public int MineNumber { get; set; }
         public Mine[] Mines { get; set; }
+        public int DecisionTime { get; set; }
 
         public PlayersPublic[] PlayersPublic { get; set; }
 

@@ -17,7 +17,19 @@ namespace EmeraldRush.Views.Game
         public MineExploringPage()
         {
             InitializeComponent();
-            this.BindingContext = viewModel = new MineExploringViewModel();
+
+            this.BindingContext = viewModel = new MineExploringViewModel(ScrollToLowerCard, AskForDecision);
+           
+        }
+
+        public void ScrollToLowerCard(int position)
+        {
+           this.CardCarousel.ScrollTo(position);
+        }
+
+        public void AskForDecision(int decisionTime)
+        {
+          
         }
     }
 }

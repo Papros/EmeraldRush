@@ -6,6 +6,7 @@ using EmeraldRush.Services.FirebaseDB;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EmeraldRush.ViewModels.Game
@@ -19,9 +20,9 @@ namespace EmeraldRush.ViewModels.Game
             private set { SetProperty(ref nodes, value); }
         }
 
-        private int mineIndex;
+        private string mineIndex;
 
-        public int MineIndex
+        public string MineIndex
         {
             get { return mineIndex; }
             private set { SetProperty(ref mineIndex, value); }
@@ -62,36 +63,42 @@ namespace EmeraldRush.ViewModels.Game
             private set { SetProperty(ref chest, value); }
         }
 
-        private string plyerUID;
+        private string playerUID;
+        private int playerID;
+        private string GameUID;
+        private Action<int> ScrollToNewCard;
+        private Action<int> AskForDecision;
 
-        public MineExploringViewModel()
+        public MineExploringViewModel(Action<int> ScrollToNewCard, Action<int> AskForDecision)
         {
-            this.plyerUID = FirebaseAuthManager.GetUserUID();
+            this.playerUID = FirebaseAuthManager.GetUserUID();
+            this.ScrollToNewCard = ScrollToNewCard;
+            this.AskForDecision = AskForDecision;
 
             this.Adventurers = new PlayersPublic[0];
             this.Nodes = new Card[0];
 
             this.Pocket = 0;
             this.Chest = 0;
-            this.MineIndex = 0;
+            this.MineIndex = "0 / 0";
             this.PathLength = 0;
 
-            if(!test())
             InitializeObjects();
+
         }
 
         private void InitializeObjects()
         {
-            Console.WriteLine("Initializing...");
-           // GameInstance gameInstance = await FirebaseGameManager.GetInstance().GetGame();
-           // UpdateData(gameInstance);
-
-            Console.WriteLine("Initialized.");
 
             MessagingCenter.Subscribe<FirebaseGameManager,GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, (callback, data) =>
             {
                 if(data != null)
-                 this.UpdateData(data);
+                {
+                    this.UpdateData(data);
+                    ScrollToNewCard.Invoke(Nodes.Length-1);
+                    AskForDecision.Invoke(data.DecisionTime);   
+                }
+               
             });
         }
 
@@ -99,68 +106,45 @@ namespace EmeraldRush.ViewModels.Game
         {
             if (gameInstance != null)
             {
-                Console.WriteLine("Ubdating and game instance not null");
                 CardDeck deck = new CardDeck();
+
+                this.GameUID = gameInstance.GameUID;
 
                 if(gameInstance.PlayersPublic != null)
                 {
                     this.Adventurers = gameInstance.PlayersPublic;
                 }
-                else { Console.WriteLine("Adventures = null"); }
-
-                Console.WriteLine("Part 1");
 
                 if (gameInstance.GetCurrent() != null)
                 {
                     this.Nodes = deck.GetThisDeck(gameInstance.GetCurrent().Node);
                 }
-                else { Console.WriteLine("currentMine = null");}
 
-                Console.WriteLine("Part 2");
-
-
-                this.MineIndex = gameInstance.CurrentMineID;
+                this.MineIndex = (gameInstance.CurrentMineID + 1).ToString()+" / "+ gameInstance.MineNumber.ToString();
                 this.PathLength = nodes.Length;
-
-                Console.WriteLine("Part 3");
 
                 if (gameInstance.GetCurrent() != null)
                 { 
                     this.EmeraldsForTake = gameInstance.GetCurrent().EmeraldsForTake;
                 }
-                else { Console.WriteLine("currentMine = null"); }
 
-                Console.WriteLine("Part 4");
+                var player = gameInstance.GetPlayerData(this.playerUID);
 
-                if (gameInstance.GetPlayerData(this.plyerUID) != null)
+                if (player != null)
                 {
-                    this.Pocket = gameInstance.GetPlayerData(this.plyerUID).pocket;
-                    this.Chest = gameInstance.GetPlayerData(this.plyerUID).chest;
+                    this.Pocket = player.pocket;
+                    this.Chest = player.chest;
+                    this.playerID = player.id;
                 }
-                else { Console.WriteLine("Player = null"); }
 
-                Console.WriteLine("Finished");
 
             }
             
         }
 
-        private bool test()
+        private void MakeDecision(bool decision)
         {
-            if(FirebaseGameManager.GetInstance() == null)
-            {
-                CardDeck deck = new CardDeck();
-                int[] nod = { 0, 3, 6, 9, 12, 15, 18, 25 };
-                this.Nodes = deck.GetThisDeck(nod);
-                this.MineIndex = 2;
-                this.PathLength = nodes.Length;
-                this.EmeraldsForTake = 15;
-                this.Pocket = 12;
-                this.Chest = 25;
-                return true;
-            }
-
-            return false;
+            Task.Run( () => DecisionManager.SendDecision(this.GameUID, this.playerID, decision));
         }
 
     }
