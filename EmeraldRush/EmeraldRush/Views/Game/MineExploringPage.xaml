@@ -163,7 +163,7 @@
             <Grid
                 x:Name="DecisionBox"
                 Style="{StaticResource Decision_box}"
-                IsVisible="false"
+                IsVisible="true"
                 Grid.Row="2"
                 Grid.Column="0"
                 >

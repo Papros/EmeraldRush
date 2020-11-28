@@ -32,10 +32,13 @@ namespace EmeraldRush.Views.Game
             Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = true);
             this.timeBar.Progress = 1;
             await this.timeBar.ProgressTo(0, (uint)decisionTime * 1000, Easing.Linear);
+       
+            if(viewModel.waitingForDecision)
             Device.BeginInvokeOnMainThread(() =>
             {
-                if (viewModel.waitingForDecision) { DecisionBox.IsVisible = false; }
+                DecisionBox.IsVisible = false; 
             });
+
         }
 
         private void Decision_No_Clicked(object sender, EventArgs e)

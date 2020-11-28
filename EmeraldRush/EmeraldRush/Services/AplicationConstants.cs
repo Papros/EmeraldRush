@@ -15,6 +15,7 @@ namespace EmeraldRush.Services
         public static readonly string PRIVATE_GAME_DATA = "Private"; 
         public static readonly string DECISION_PROPERTIES = "Decision";
         public static readonly string GAME_NODE = "game";
+        public static readonly string PLAYERS_PRIVATE_NODE = "PlayersPrivate";
 
         public static readonly string GAME_FOUND_MSG = "game_found";
         public static readonly string GAME_UPDATE_MSG = "update_game";

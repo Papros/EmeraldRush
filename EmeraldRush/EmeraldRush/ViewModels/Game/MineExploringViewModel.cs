@@ -68,6 +68,7 @@ namespace EmeraldRush.ViewModels.Game
         private int playerID;
         private string GameUID;
         public bool waitingForDecision;
+        public bool makingDecision;
         private Action<int> ScrollToNewCard;
         private Action<int> AskForDecision;
 
@@ -98,8 +99,12 @@ namespace EmeraldRush.ViewModels.Game
                 {
                     this.UpdateData(data);
                     ScrollToNewCard.Invoke(Nodes.Length - 1);
-                    waitingForDecision = true;
-                    //  AskForDecision.Invoke(data.DecisionTime);   
+                    if (makingDecision)
+                    {
+                        waitingForDecision = true;
+                        AskForDecision.Invoke(data.DecisionTime);
+                    }
+                          
                 }
                 else
                 {
@@ -142,6 +147,7 @@ namespace EmeraldRush.ViewModels.Game
                     this.Pocket = player.pocket;
                     this.Chest = player.chest;
                     this.playerID = player.id;
+                    this.makingDecision = (player.status == PlayerStatus.EXPLORING);
                 }
 
 
@@ -155,11 +161,11 @@ namespace EmeraldRush.ViewModels.Game
 
             if (decision)
             {
-                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_BACK));
+                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_FURTHER));
             }
             else
             {
-                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_FURTHER));
+                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_BACK));
             }
 
         }
