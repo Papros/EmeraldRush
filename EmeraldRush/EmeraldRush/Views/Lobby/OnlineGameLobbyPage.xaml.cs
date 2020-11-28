@@ -33,7 +33,18 @@ namespace EmeraldRush.Views.Lobby
 
         private void PlayerMode_8_Clicked(object sender, EventArgs e)
         {
+<<<<<<< Updated upstream
             this.viewModel.AwaitForGame(8);
         }
+=======
+           this.viewModel.SignInToPlayersQueue(8, OpenViewPage);
+        }
+
+        private void OpenViewPage()
+        {
+            Device.BeginInvokeOnMainThread( () => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage()) );   
+        }
+
+>>>>>>> Stashed changes
     }
 }
