@@ -1,4 +1,6 @@
-﻿using EmeraldRush.ViewModels.Lobby;
+﻿using EmeraldRush.Services;
+using EmeraldRush.ViewModels.Lobby;
+using EmeraldRush.Views.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,16 +25,17 @@ namespace EmeraldRush.Views.Lobby
 
         private void PlayerMode_2_Clicked(object sender, EventArgs e)
         {
-            this.viewModel.AwaitForGame(2);
+            this.viewModel.SignInToPlayersQueue(2, OpenViewPage);
         }
 
         private void PlayerMode_4_Clicked(object sender, EventArgs e)
         {
-            this.viewModel.AwaitForGame(4);
+            this.viewModel.SignInToPlayersQueue(4, OpenViewPage);
         }
 
         private void PlayerMode_8_Clicked(object sender, EventArgs e)
         {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             this.viewModel.AwaitForGame(8);
         }
@@ -46,5 +49,18 @@ namespace EmeraldRush.Views.Lobby
         }
 
 >>>>>>> Stashed changes
+=======
+            OpenViewPage();
+                //this.viewModel.SignInToPlayersQueue(8, OpenViewPage);
+        }
+
+        private void OpenViewPage()
+        {
+            LogManager.Print("Opening MainExploringPage from GameLobby");
+            Device.BeginInvokeOnMainThread( () => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage()) );
+            
+        }
+
+>>>>>>> develop
     }
 }

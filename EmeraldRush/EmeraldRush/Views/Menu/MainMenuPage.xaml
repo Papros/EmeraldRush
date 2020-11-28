@@ -7,8 +7,6 @@
 
             <Label Text="Emerald Rush" />
 
-            <Button Text="Single Game" Clicked="SingleGame_Clicked" />
-
             <Button Text="Play With Others!" Clicked="Multiplayer_Clicked" />
 
             <Button Text="Settings" Clicked="Settings_Clicked" />

@@ -176,6 +176,7 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 
+<<<<<<< HEAD
                 <ImageButton Grid.Row="0" Grid.Column="0" Source="decision_no.png" 
                              Clicked="Decision_No_Clicked"
                              Style="{StaticResource Decision_no}"/>
@@ -183,6 +184,11 @@
                              Clicked="Decision_Yes_Clicked"
                              Style="{StaticResource Decision_yes}"/>
                 <ProgressBar x:Name="timeBar" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Decision_TimeBar}"/>
+=======
+                <ImageButton Grid.Row="0" Grid.Column="0" Source="decision_no.png" Style="{StaticResource Decision_no}"/>
+                <ImageButton Grid.Row="0" Grid.Column="1" Source="decision_yes.png" Style="{StaticResource Decision_yes}"/>
+                <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Decision_TimeBar}"/>
+>>>>>>> develop
 
             </Grid>
 

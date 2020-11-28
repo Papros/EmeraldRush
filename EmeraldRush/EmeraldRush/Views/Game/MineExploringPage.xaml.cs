@@ -27,6 +27,7 @@ namespace EmeraldRush.Views.Game
            this.CardCarousel.ScrollTo(position);
         }
 
+<<<<<<< HEAD
         public async void AskForDecision(int decisionTime)
         {
             Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = true);
@@ -36,6 +37,11 @@ namespace EmeraldRush.Views.Game
             {
                 if (viewModel.waitingForDecision) { DecisionBox.IsVisible = false; }
             });
+=======
+        public void AskForDecision(int decisionTime)
+        {
+          
+>>>>>>> develop
         }
     }
 }

@@ -3,6 +3,245 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EmeraldRush.App">
     <Application.Resources>
+        <ResourceDictionary>
 
+            <!--
+                Color set
+            -->
+            <Color x:Key="green_dark">#1f240a</Color>
+            <Color x:Key="green">#39571c</Color>
+            <Color x:Key="green_light">#a58c27</Color>
+
+            <Color x:Key="brown">#45230d</Color>
+            <Color x:Key="brown_light">#773421</Color>
+            <Color x:Key="brown_dark">#36170c</Color>
+            <Color x:Key="brown_darker">#26170c</Color>
+
+            <Color x:Key="blue">#276468</Color>
+            <Color x:Key="blue_light">#3c9f9c</Color>
+            <Color x:Key="blue_dark">#183f39</Color>
+            <Color x:Key="blue_darker">#082f29</Color>
+
+            <Color x:Key="beige">#efb775</Color>
+            <Color x:Key="beige_light">#efd8a1</Color>
+            <Color x:Key="beige_dark">#684c3c</Color>
+
+            <Color x:Key="orange">#ef692f</Color>
+            <Color x:Key="orange_dark">#ef3a0c</Color>
+
+            <Color x:Key="grey">#927e6a</Color>
+
+            <Color x:Key="red">#927e6a</Color>
+            <Color x:Key="red_light">#efd8a1</Color>
+            <Color x:Key="red_dark">#684c3c</Color>
+
+            <!--
+                    HEAD UI BAR
+            -->
+
+            <Style x:Key="Upper_ui_bar" TargetType="StackLayout" >
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+
+            <Style x:Key="Upper_label_Container" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+                <Setter Property="Padding" Value="10,3,10,3" />
+                <Setter Property="Margin" Value="10,3,10,3"/>
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <!--
+                    CARD CAROSEUL
+            -->
+
+            <Style x:Key="Card_carousel" TargetType="CarouselView" >
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="IsBounceEnabled" Value="True"/>
+                <Setter Property="ItemsUpdatingScrollMode" Value="KeepLastItemInView" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+                <Setter Property="IsScrollAnimated" Value="True" />
+                <Setter Property="IsSwipeEnabled" Value="True" />
+                <Setter Property="PeekAreaInsets" Value="100" />
+            </Style>
+
+            <Style x:Key="Card_title" TargetType="Label" >
+                <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CharacterSpacing" Value="3" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="Card_style" TargetType="Image" >
+                <Setter Property="Aspect" Value="Fill" />
+                <Setter Property="IsAnimationPlaying" Value="True" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+            <Style x:Key="Carousel_page" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+            <Style x:Key="Outer_card_container" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource brown_darker}" />
+                <Setter Property="Margin" Value="2,2,2,2" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+
+            <Style x:Key="Card_container" TargetType="StackLayout" >
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
+
+
+            <!--  
+                    LOWER UI BAR SECTION
+            -->
+
+            <Style x:Key="Lower_ui_bar" TargetType="StackLayout" >
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style x:Key="Label_contianer" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+                <Setter Property="Padding" Value="10,3,10,3" />
+                <Setter Property="Margin" Value="10,3,10,3"/>
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="Standard_label" TargetType="Label" >
+                <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="CharacterSpacing" Value="2" />
+                <Setter Property="Padding" Value="10,0,10,0" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalTextAlignment" Value="End" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            
+            <!-- 
+                    PLAYER'S CAROUSEL VIEW  
+            -->
+            
+            <Style x:Key="Player_carousel" TargetType="CarouselView" >
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="IsBounceEnabled" Value="True"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Never" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+                <Setter Property="IsScrollAnimated" Value="True" />
+                <Setter Property="IsSwipeEnabled" Value="True" />
+                <Setter Property="PeekAreaInsets" Value="30" />
+            </Style>
+
+            <Style x:Key="Player_carousel_page" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0,0,0,0" />
+            </Style>
+
+            <Style x:Key="Player_label_container" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green}" />
+                <Setter Property="Margin" Value="0,0,10,0" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+
+            <Style x:Key="Player_container" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Margin" Value="10,1,10,1" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
+            <Style x:Key="Player_info_container" TargetType="StackLayout">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Padding" Value="0"/> 
+            </Style>
+            
+            <Style x:Key="player_label" TargetType="Label" >
+                <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="CharacterSpacing" Value="2" />
+                <Setter Property="Padding" Value="10,0,10,0" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="Default_grid_style" TargetType="Grid" >
+                <Setter Property="RowSpacing" Value="0" />
+            </Style>
+
+            <Style x:Key="Main_grid_style" TargetType="Grid" >
+                <Setter Property="RowSpacing" Value="0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+                <Setter Property="Padding" Value="0,0,0,10" />
+            </Style>
+
+            <Style x:Key="label_icon" TargetType="Image" >
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="IsAnimationPlaying" Value="True" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style x:Key="label_container" TargetType="StackLayout" >
+                <Setter Property="Orientation" Value="Horizontal" />
+            </Style>
+            
+            <!--
+            ########################################################################3
+            -->
+            <Style x:Key="Decision_box" TargetType="Grid" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green}" />
+                <Setter Property="RowSpacing" Value="0" />
+                <Setter Property="ColumnSpacing" Value="0" />
+                <Setter Property="Margin" Value="0,0,0,40" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+
+            <Style x:Key="Decision_no" TargetType="ImageButton" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="Decision_yes" TargetType="ImageButton" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="Decision_TimeBar" TargetType="ProgressBar" >
+                <Setter Property="ProgressColor" Value="{StaticResource blue}" />
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

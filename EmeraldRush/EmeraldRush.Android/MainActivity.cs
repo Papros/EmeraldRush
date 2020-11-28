@@ -20,6 +20,15 @@ namespace EmeraldRush.Droid
 
             base.OnCreate(savedInstanceState);
 
+            int uiOptions = (int)Window.DecorView.SystemUiVisibility;
+
+            uiOptions |= (int)SystemUiFlags.LowProfile;
+            uiOptions |= (int)SystemUiFlags.Fullscreen;
+            uiOptions |= (int)SystemUiFlags.HideNavigation;
+            uiOptions |= (int)SystemUiFlags.ImmersiveSticky;
+
+            Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
+
             Xamarin.Forms.DependencyService.Register<FirebaseAuthentication>();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

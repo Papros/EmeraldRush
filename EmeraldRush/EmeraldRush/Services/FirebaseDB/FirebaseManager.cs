@@ -26,7 +26,9 @@ namespace EmeraldRush.Services.FirebaseDB
 
         private FirebaseManager()
         {
-            this.DatabaseClient = new FirebaseClient(AplicationConstants.FIRABASE_URL_ADRESS);
+            FirebaseOptions options = new FirebaseOptions { AuthTokenAsyncFactory = async () => await FirebaseAuthService.FirebaseAuthManager.Login() };
+
+            this.DatabaseClient = new FirebaseClient(AplicationConstants.FIRABASE_URL_ADRESS, options );
         }
 
         public FirebaseClient GetClient()
