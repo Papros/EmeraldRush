@@ -13,7 +13,7 @@ namespace EmeraldRush.Views.Game
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MineExploringPage : ContentPage
     {
-        MineExploringViewModel viewModel;
+        readonly MineExploringViewModel viewModel;
         public MineExploringPage()
         {
             InitializeComponent();

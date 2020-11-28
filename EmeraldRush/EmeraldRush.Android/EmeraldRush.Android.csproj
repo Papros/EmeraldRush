@@ -63,8 +63,14 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FirebaseDatabase.net">
-      <Version>4.0.4</Version>
+    <PackageReference Include="Xamarin.AndroidX.Browser">
+      <Version>1.2.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4">
+      <Version>1.0.0.5</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
+      <Version>2.2.0.3</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Auth">
       <Version>71.1605.4</Version>
@@ -72,10 +78,13 @@
     <PackageReference Include="Xamarin.Firebase.Core">
       <Version>71.1601.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Google.Android.Material">
+      <Version>1.1.0.5</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Auth">
-      <Version>71.1600.4</Version>
+      <Version>118.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
