@@ -7,10 +7,10 @@ namespace EmeraldRush.Model.GameModel
 {
     class Mine
     {
-        public int[] Node { get; set; }
-        public int EmeraldsForTake { get; set;}
-        public MineStatus MineState { get; set; }
+        public int EmeraldsForTake { get; set; }
         public int LastMoveTimestamp { get; set; }
+        public MineStatus MineState { get; set; }
+        public int[] Node { get; set; }
 
         public Mine( )
         {

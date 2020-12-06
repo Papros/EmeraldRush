@@ -25,11 +25,16 @@ namespace EmeraldRush.Views.Game
         public void ScrollToLowerCard(int position)
         {
             this.CardCarousel.ScrollTo(position);
+            if(DecisionBox.IsVisible) DecisionBox.RaiseChild(this.Content);
         }
 
         public async void AskForDecision(int decisionTime)
         {
-            Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = true);
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                DecisionBox.IsVisible = true;
+                DecisionBox.RaiseChild(this.Content);
+            });
             this.timeBar.Progress = 1;
             await this.timeBar.ProgressTo(0, (uint)decisionTime * 1000, Easing.Linear);
        

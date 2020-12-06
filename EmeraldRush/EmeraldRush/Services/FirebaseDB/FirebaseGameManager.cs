@@ -39,24 +39,38 @@ namespace EmeraldRush.Services.FirebaseDB
 
         private GameInstance gameCache;
 
-        public void SubscribeToGame(string gameUID = "")
+        public bool SubscribeToGame(string gameUID = "")
         {
             if(gameUID != "")
             {
                 this.GameUID = gameUID;
+                return false;
             }
 
-            gameDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(GameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).AsObservable<GameInstance>().Subscribe(Job => 
-            { 
-            
-                if(Job.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && Job.Object != null)
+            try
+            {
+                gameDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(GameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).AsObservable<GameInstance>().Subscribe(Job =>
                 {
-                    Console.WriteLine( "Update in:" + Job.Object.GameUID );
-                    MessagingCenter.Send<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, Job.Object);
-                    this.gameCache = Job.Object;
-                }
 
-            });
+                    if (Job.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && Job.Object != null)
+                    {
+                        MessagingCenter.Send<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, Job.Object);
+                        this.gameCache = Job.Object;
+                    }
+                    else
+                    {
+                        LogManager.Print("Object null", "FirebaseGameManager");
+                    }
+
+                });
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<GameInstance> GetGame()

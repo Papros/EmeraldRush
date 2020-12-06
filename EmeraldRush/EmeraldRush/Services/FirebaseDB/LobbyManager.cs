@@ -29,25 +29,33 @@ namespace EmeraldRush.Services.FirebaseDB
                     {
                         if (Job.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && !string.IsNullOrEmpty(Job.Object.GameUID))
                         {
-                            FirebaseGameManager.Initialize(Job.Object.GameUID).SubscribeToGame();
-                            Console.WriteLine("Znaleziono gre: " + Job.Object.GameUID);
-                            MessagingCenter.Send<LobbyManager>(new LobbyManager(), AplicationConstants.GAME_FOUND_MSG);
-                            Console.WriteLine("Message send:");
+                            if( FirebaseGameManager.Initialize(Job.Object.GameUID).SubscribeToGame())
+                            {
+                                LogManager.Print("Game subscribed", "LobbyManager");
+                                MessagingCenter.Send<LobbyManager>(new LobbyManager(), AplicationConstants.GAME_FOUND_MSG);
+                                UnsubscribePlayerAccount();
+                            }
+                            else
+                            {
+                                LogManager.Print("Game subscribe error", "LobbyManager");
+                            }
                         }
 
                     });
+
                     QueueToken token = new QueueToken(UserUID, type.ToString());
                     await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.QUEUE).Child(UserUID).PatchAsync(token);
+
                     return true;
 
                 }catch( Firebase.Database.FirebaseException ex)
                 {
-                    Console.WriteLine("NULL REFERENCE: "+ex.Message);
+                    LogManager.Print("Account subscribe FirebaseException: " + ex, "LobbyManager");
                     return false;
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine("NULL REFERENCE: " + ex.Message);
+                    LogManager.Print("Account subscribe Exception: " + ex, "LobbyManager");
                     return false;
                 }
             }

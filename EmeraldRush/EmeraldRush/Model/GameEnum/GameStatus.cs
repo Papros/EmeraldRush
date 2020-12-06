@@ -4,8 +4,8 @@ using System.Text;
 
 namespace EmeraldRush.Model.GameEnum
 {
-    enum GameDecision
+    enum GameStatus
     {
-       GO,BACK
+        WAITING_FOR_MOVE, WAITING_FOR_CARD, FINISHED, WAITING_FOR_FIRST
     }
 }

@@ -147,7 +147,7 @@ namespace EmeraldRush.ViewModels.Game
                     this.Pocket = player.pocket;
                     this.Chest = player.chest;
                     this.playerID = player.id;
-                    this.makingDecision = (player.status == PlayerStatus.EXPLORING);
+                    this.makingDecision = (player.status == PlayerStatus.EXPLORING && gameInstance.PublicState == GameStatus.WAITING_FOR_MOVE);
                 }
 
 

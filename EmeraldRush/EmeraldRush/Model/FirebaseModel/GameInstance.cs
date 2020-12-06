@@ -1,4 +1,5 @@
-﻿using EmeraldRush.Model.GameModel;
+﻿using EmeraldRush.Model.GameEnum;
+using EmeraldRush.Model.GameModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +8,17 @@ namespace EmeraldRush.Model.FirebaseModel
 {
     class GameInstance
     {
-        public string GameUID { get; set; }
         public int CurrentMineID { get; set; }
+        public int DecisionTime { get; set; }
+        public int DragonMinimalDeep { get; set; }
+        public int GameStartTimestamp { get; set; }
+        public string GameUID { get; set; }
         public int MineNumber { get; set; }
         public Mine[] Mines { get; set; }
-        public int DecisionTime { get; set; }
-
         public PlayersPublic[] PlayersPublic { get; set; }
+        public GameStatus PublicState { get; set; }
+        public int RoundCooldownTime { get; set; }
+        public int RoundID { get; set; }
 
         public GameInstance()
         {
