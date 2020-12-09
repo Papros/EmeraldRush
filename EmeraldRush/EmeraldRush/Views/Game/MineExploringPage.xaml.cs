@@ -1,9 +1,5 @@
 ﻿using EmeraldRush.ViewModels.Game;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -30,32 +26,31 @@ namespace EmeraldRush.Views.Game
 
         public async void AskForDecision(int decisionTime)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            
+            Device.BeginInvokeOnMainThread(async () => 
             {
-                DecisionBox.IsVisible = true;
-                DecisionBox.RaiseChild(this.Content);
-            });
-            this.timeBar.Progress = 1;
-            await this.timeBar.ProgressTo(0, (uint)decisionTime * 1000, Easing.Linear);
-       
-            if(viewModel.waitingForDecision)
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                DecisionBox.IsVisible = false; 
-            });
+                //DecisionBox.IsVisible = true;
+
+                this.CardCarousel.Focus();
+                this.timeBar.Focus();
+                this.timeBar.Progress = 1;
+                await this.timeBar.ProgressTo(0, (uint)decisionTime * 1000, Easing.Linear);
+
+                //DecisionBox.IsVisible = false;
+            });            
 
         }
 
         private void Decision_No_Clicked(object sender, EventArgs e)
         {
             this.viewModel.MakeDecision(false);
-            Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
+           // Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
         }
 
         private void Decision_Yes_Clicked(object sender, EventArgs e)
         {
             this.viewModel.MakeDecision(true);
-            Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
+            //Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
         }
     }
 }

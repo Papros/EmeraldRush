@@ -1,7 +1,4 @@
 ﻿using EmeraldRush.Model.GameEnum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.GameModel
 {
@@ -22,6 +19,7 @@ namespace EmeraldRush.Model.GameModel
             this.Title = type.ToString();
             switch (type)
             {
+                case CardType.ENTRY: ImagePath = "mine_entry.png"; break;
                 case CardType.DRAGON: ImagePath = "dragon.png"; break;
                 case CardType.EMERALDS: ImagePath = "cave.png"; break;
                 case CardType.LAVA: ImagePath = "lava.png"; break;

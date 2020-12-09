@@ -1,11 +1,10 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Firebase;
 using EmeraldRush.Droid.FirebaseAuthService;
 
 namespace EmeraldRush.Droid
@@ -29,6 +28,8 @@ namespace EmeraldRush.Droid
 
             Window.DecorView.SystemUiVisibility = (StatusBarVisibility)uiOptions;
 
+            FirebaseApp.InitializeApp(Application.Context);
+            FirebaseApp.Instance.SetAutomaticResourceManagementEnabled(true);
             Xamarin.Forms.DependencyService.Register<FirebaseAuthentication>();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);

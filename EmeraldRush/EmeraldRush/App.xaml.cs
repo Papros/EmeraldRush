@@ -1,7 +1,5 @@
 ﻿using EmeraldRush.Views.Menu;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace EmeraldRush
 {

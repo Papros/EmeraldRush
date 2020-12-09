@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
 using Firebase.Database.Query;
@@ -13,8 +10,8 @@ namespace EmeraldRush.Services.FirebaseDB
         public static async Task SendDecision(string GameUID, int playerId, PlayerDecision goingFurtherDecision)
         {
 
-            DecisionToken decision = new DecisionToken(goingFurtherDecision);
-            LogManager.Print("Send decision " + goingFurtherDecision.ToString()+":> "+decision.Decision, "DecisionManager");
+            //DecisionToken decision = new DecisionToken(goingFurtherDecision);
+            LogManager.Print("Send decision " + goingFurtherDecision.ToString()+":> "+ goingFurtherDecision, "DecisionManager");
 
             await FirebaseManager.GetInstance().GetClient()
                 .Child(AplicationConstants.GAME_LIST)
@@ -22,8 +19,9 @@ namespace EmeraldRush.Services.FirebaseDB
                 .Child(AplicationConstants.GAME_NODE)
                 .Child(AplicationConstants.PRIVATE_GAME_DATA)
                 .Child(AplicationConstants.PLAYERS_PRIVATE_NODE)
-                .Child(playerId.ToString()).PatchAsync(decision);
-                //.Child(AplicationConstants.DECISION_PROPERTIES).PatchAsync(goingFurtherDecision);
+                .Child(playerId.ToString())
+                .Child(AplicationConstants.DECISION_PROPERTIES).PutAsync(goingFurtherDecision);
+
         }
     }
 }

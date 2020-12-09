@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EmeraldRush.Services
+﻿namespace EmeraldRush.Services
 {
     class AplicationConstants
     {

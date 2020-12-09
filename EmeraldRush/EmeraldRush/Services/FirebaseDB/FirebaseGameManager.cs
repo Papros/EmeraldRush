@@ -1,9 +1,8 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
+using EmeraldRush.Services.FirebaseAuthService;
 using Firebase.Database.Query;
 using Firebase.Database.Streaming;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -44,33 +43,34 @@ namespace EmeraldRush.Services.FirebaseDB
             if(gameUID != "")
             {
                 this.GameUID = gameUID;
-                return false;
             }
 
-            try
+            gameDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(this.GameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).AsObservable<GameInstance>().Subscribe(Job =>
             {
-                gameDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(GameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).AsObservable<GameInstance>().Subscribe(Job =>
-                {
 
-                    if (Job.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && Job.Object != null)
+                LogManager.Print("found some updates", "FirebaseGameManager");
+                if (Job.Object != null)
+                {
+                    if(Job.EventType == FirebaseEventType.InsertOrUpdate)
                     {
+                        LogManager.Print("Game update", "FirebaseGameManager");
                         MessagingCenter.Send<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, Job.Object);
                         this.gameCache = Job.Object;
                     }
                     else
                     {
-                        LogManager.Print("Object null", "FirebaseGameManager");
+                        LogManager.Print("Not UpdateOrInsert", "FirebaseGameManager");
                     }
+                }
+                else
+                {
+                    LogManager.Print("Object null", "FirebaseGameManager");
+                }
 
-                });
+            });
+            LogManager.Print("game subscribed..");
+            return true;
 
-                return true;
-
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public async Task<GameInstance> GetGame()

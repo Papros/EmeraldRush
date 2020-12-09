@@ -1,7 +1,4 @@
 ﻿using EmeraldRush.Model.GameEnum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.GameModel
 {

@@ -2,8 +2,6 @@
 using EmeraldRush.Services.FirebaseAuthService;
 using EmeraldRush.Services.FirebaseDB;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -23,7 +21,7 @@ namespace EmeraldRush.ViewModels.Lobby
         public async Task SignInToPlayersQueue(int type, Action gameFoundCallbck)
         {
             string userUID = await FirebaseAuthManager.LoginAndGetUID();
-            EmeraldRush.Services.LogManager.Print("Get user UID: "+userUID);
+            LogManager.Print("Get user UID: "+userUID);
 
             MessagingCenter.Subscribe<LobbyManager>(this, AplicationConstants.GAME_FOUND_MSG, (sender) =>
             {
@@ -47,7 +45,7 @@ namespace EmeraldRush.ViewModels.Lobby
                 MessagingCenter.Unsubscribe<LobbyManager>(this, AplicationConstants.GAME_FOUND_MSG);
             }
 
-            EmeraldRush.Services.LogManager.Print("Signed.");
+            LogManager.Print("Signed.");
             LobbyStatus = "Looking for another adventurers...";
 
             

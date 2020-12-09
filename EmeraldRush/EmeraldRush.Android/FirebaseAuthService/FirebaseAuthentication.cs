@@ -1,37 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
-using Android.Gms.Auth.Api;
-using Android.Gms.Auth.Api.SignIn;
-using Android.Gms.Common.Apis;
-using Android.Gms.Extensions;
-using Android.Gms.Tasks;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using EmeraldRush.Droid.Services;
 using EmeraldRush.Services.FirebaseAuthService;
-using Firebase;
 using Firebase.Auth;
 
 namespace EmeraldRush.Droid.FirebaseAuthService
 {
-    
+
     class FirebaseAuthentication : IFirebaseAuthentication
     {
         public bool IsSignIn()
         {
-            var user = Firebase.Auth.FirebaseAuth.Instance.CurrentUser;
+            var user = FirebaseAuth.Instance.CurrentUser;
             return user != null;
         }
 
         public string GetUserUID()
         {
-            var user = Firebase.Auth.FirebaseAuth.Instance.CurrentUser;
+            var user = FirebaseAuth.Instance.CurrentUser;
 
             return user?.Uid;
         }
@@ -40,18 +26,21 @@ namespace EmeraldRush.Droid.FirebaseAuthService
         {
             try
             {
-                var authResoult = await Firebase.Auth.FirebaseAuth.Instance.SignInAnonymouslyAsync();
+                var authResoult = await FirebaseAuth.Instance.SignInAnonymouslyAsync();
                 var token = await authResoult.User.GetIdTokenAsync(true);
+
 
                 return token.Token;
             }
             catch (FirebaseAuthInvalidUserException e)
             {
+                LogManager.Print("FirebaseAuthInvlidUserException: " + e, "droid.FirebaseAuthentication");
                 e.PrintStackTrace();
                 return string.Empty;
             }
             catch (FirebaseAuthInvalidCredentialsException e)
             {
+                LogManager.Print("FirebaseAuthInvalidCredentialsException: " + e, "droid.FirebaseAuthentication");
                 e.PrintStackTrace();
                 return string.Empty;
             }
@@ -61,7 +50,7 @@ namespace EmeraldRush.Droid.FirebaseAuthService
         {
             try
             {
-                Firebase.Auth.FirebaseAuth.Instance.SignOut();
+                FirebaseAuth.Instance.SignOut();
                 return true;
             }
             catch (Exception)

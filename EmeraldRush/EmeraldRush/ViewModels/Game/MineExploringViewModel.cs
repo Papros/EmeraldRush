@@ -5,8 +5,7 @@ using EmeraldRush.Services;
 using EmeraldRush.Services.FirebaseAuthService;
 using EmeraldRush.Services.FirebaseDB;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -92,6 +91,31 @@ namespace EmeraldRush.ViewModels.Game
 
         private void InitializeObjects()
         {
+            LogManager.Print("Game initalizing", "MineExploringVM");
+            Task.Run(async () =>
+            {
+
+                var data = await FirebaseGameManager.GetInstance().GetGame();
+                LogManager.Print("Game force update", "MineExploringVM");
+                if (data != null)
+                {
+                    this.UpdateData(data);
+                    ScrollToNewCard.Invoke(Nodes.Length - 1);
+                    if (makingDecision)
+                    {
+                        waitingForDecision = true;
+                        AskForDecision.Invoke(data.DecisionTime);
+                    }
+                    LogManager.Print("Game view updated.", "MineExploringVM");
+
+                }
+                else
+                {
+                    LogManager.Print("Null gameInstance", "MineExploringVM");
+                }
+
+            });
+
 
             MessagingCenter.Subscribe<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, (callback, data) =>
             {
@@ -104,7 +128,8 @@ namespace EmeraldRush.ViewModels.Game
                         waitingForDecision = true;
                         AskForDecision.Invoke(data.DecisionTime);
                     }
-                          
+                    LogManager.Print("Game view updated.", "MineExploringVM");
+
                 }
                 else
                 {
@@ -129,7 +154,7 @@ namespace EmeraldRush.ViewModels.Game
 
                 if (gameInstance.GetCurrent() != null)
                 {
-                    this.Nodes = deck.GetThisDeck(gameInstance.GetCurrent().Node);
+                    this.Nodes = (new Card[]{new Card(-1,CardType.ENTRY)}).Concat(deck.GetThisDeck(gameInstance.GetCurrent().Node)).ToArray();
                 }
 
                 this.MineIndex = (gameInstance.CurrentMineID + 1).ToString() + " / " + gameInstance.MineNumber.ToString();
@@ -147,7 +172,7 @@ namespace EmeraldRush.ViewModels.Game
                     this.Pocket = player.pocket;
                     this.Chest = player.chest;
                     this.playerID = player.id;
-                    this.makingDecision = (player.status == PlayerStatus.EXPLORING && gameInstance.PublicState == GameStatus.WAITING_FOR_MOVE);
+                    this.makingDecision = (player.status == PlayerStatus.EXPLORING );
                 }
 
 
