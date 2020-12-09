@@ -27,7 +27,6 @@ namespace EmeraldRush.Services.FirebaseDB
 
                     playerDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.USER_LIST).Child(UserUID).AsObservable<Player>().Subscribe(Job =>
                     {
-                        Console.WriteLine("Jakieś zmiany");
                         if (Job.EventType == Firebase.Database.Streaming.FirebaseEventType.InsertOrUpdate && !string.IsNullOrEmpty(Job.Object.GameUID))
                         {
                             FirebaseGameManager.Initialize(Job.Object.GameUID).SubscribeToGame();

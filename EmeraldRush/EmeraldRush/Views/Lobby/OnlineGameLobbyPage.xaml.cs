@@ -25,16 +25,17 @@ namespace EmeraldRush.Views.Lobby
 
         private void PlayerMode_2_Clicked(object sender, EventArgs e)
         {
-            this.viewModel.SignInToPlayersQueue(2, OpenViewPage);
+            Task.Run( () => this.viewModel.SignInToPlayersQueue(2, OpenViewPage) );
         }
 
         private void PlayerMode_4_Clicked(object sender, EventArgs e)
         {
-            this.viewModel.SignInToPlayersQueue(4, OpenViewPage);
+            Task.Run( () => this.viewModel.SignInToPlayersQueue(4, OpenViewPage) );
         }
 
         private void PlayerMode_8_Clicked(object sender, EventArgs e)
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< Updated upstream
             this.viewModel.AwaitForGame(8);
@@ -52,6 +53,9 @@ namespace EmeraldRush.Views.Lobby
 =======
             OpenViewPage();
                 //this.viewModel.SignInToPlayersQueue(8, OpenViewPage);
+=======
+            Task.Run( () => this.viewModel.SignInToPlayersQueue(8, OpenViewPage) );
+>>>>>>> develop
         }
 
         private void OpenViewPage()

@@ -1,4 +1,5 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
+using EmeraldRush.Model.GameEnum;
 using EmeraldRush.Model.GameModel;
 using EmeraldRush.Services;
 using EmeraldRush.Services.FirebaseAuthService;
@@ -29,7 +30,7 @@ namespace EmeraldRush.ViewModels.Game
         }
 
         private PlayersPublic[] adventurers;
-        public PlayersPublic[] Adventurers 
+        public PlayersPublic[] Adventurers
         {
             get { return adventurers; }
             private set { SetProperty(ref adventurers, value); }
@@ -66,6 +67,8 @@ namespace EmeraldRush.ViewModels.Game
         private string playerUID;
         private int playerID;
         private string GameUID;
+        public bool waitingForDecision;
+        public bool makingDecision;
         private Action<int> ScrollToNewCard;
         private Action<int> AskForDecision;
 
@@ -90,15 +93,24 @@ namespace EmeraldRush.ViewModels.Game
         private void InitializeObjects()
         {
 
-            MessagingCenter.Subscribe<FirebaseGameManager,GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, (callback, data) =>
+            MessagingCenter.Subscribe<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, (callback, data) =>
             {
-                if(data != null)
+                if (data != null)
                 {
                     this.UpdateData(data);
-                    ScrollToNewCard.Invoke(Nodes.Length-1);
-                    AskForDecision.Invoke(data.DecisionTime);   
+                    ScrollToNewCard.Invoke(Nodes.Length - 1);
+                    if (makingDecision)
+                    {
+                        waitingForDecision = true;
+                        AskForDecision.Invoke(data.DecisionTime);
+                    }
+                          
                 }
-               
+                else
+                {
+                    LogManager.Print("Null gameInstance", "MineExploringVM");
+                }
+
             });
         }
 
@@ -110,7 +122,7 @@ namespace EmeraldRush.ViewModels.Game
 
                 this.GameUID = gameInstance.GameUID;
 
-                if(gameInstance.PlayersPublic != null)
+                if (gameInstance.PlayersPublic != null)
                 {
                     this.Adventurers = gameInstance.PlayersPublic;
                 }
@@ -120,11 +132,11 @@ namespace EmeraldRush.ViewModels.Game
                     this.Nodes = deck.GetThisDeck(gameInstance.GetCurrent().Node);
                 }
 
-                this.MineIndex = (gameInstance.CurrentMineID + 1).ToString()+" / "+ gameInstance.MineNumber.ToString();
+                this.MineIndex = (gameInstance.CurrentMineID + 1).ToString() + " / " + gameInstance.MineNumber.ToString();
                 this.PathLength = nodes.Length;
 
                 if (gameInstance.GetCurrent() != null)
-                { 
+                {
                     this.EmeraldsForTake = gameInstance.GetCurrent().EmeraldsForTake;
                 }
 
@@ -135,16 +147,27 @@ namespace EmeraldRush.ViewModels.Game
                     this.Pocket = player.pocket;
                     this.Chest = player.chest;
                     this.playerID = player.id;
+                    this.makingDecision = (player.status == PlayerStatus.EXPLORING);
                 }
 
 
             }
-            
+
         }
 
-        private void MakeDecision(bool decision)
+        public void MakeDecision(bool decision)
         {
-            Task.Run( () => DecisionManager.SendDecision(this.GameUID, this.playerID, decision));
+            waitingForDecision = false;
+
+            if (decision)
+            {
+                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_FURTHER));
+            }
+            else
+            {
+                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_BACK));
+            }
+
         }
 
     }

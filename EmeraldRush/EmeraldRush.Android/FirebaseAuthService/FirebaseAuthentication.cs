@@ -40,9 +40,8 @@ namespace EmeraldRush.Droid.FirebaseAuthService
         {
             try
             {
-                var user = await Firebase.Auth.FirebaseAuth.Instance.SignInAnonymouslyAsync();
-
-                var token = await user.User.GetIdTokenAsync(true);
+                var authResoult = await Firebase.Auth.FirebaseAuth.Instance.SignInAnonymouslyAsync();
+                var token = await authResoult.User.GetIdTokenAsync(true);
 
                 return token.Token;
             }
