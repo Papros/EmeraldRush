@@ -128,6 +128,10 @@ namespace EmeraldRush.ViewModels.Game
                         waitingForDecision = true;
                         AskForDecision.Invoke(data.DecisionTime);
                     }
+                    else
+                    {
+                        waitingForDecision = false;
+                    }
                     LogManager.Print("Game view updated.", "MineExploringVM");
 
                 }

@@ -88,8 +88,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FirebaseAuthService\AuthStateListener.cs" />
-    <Compile Include="FirebaseAuthService\authtokenListener.cs" />
     <Compile Include="FirebaseAuthService\FirebaseAuthentication.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
