@@ -1,5 +1,8 @@
-﻿using EmeraldRush.Model.FirebaseModel;
+﻿using EmeraldRush.Model.AIMode.Game;
+using EmeraldRush.Model.ConfigEnum;
+using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
+using EmeraldRush.Model.GameManager;
 using EmeraldRush.Model.GameModel;
 using EmeraldRush.Services;
 using EmeraldRush.Services.FirebaseAuthService;
@@ -71,8 +74,11 @@ namespace EmeraldRush.ViewModels.Game
         private Action<int> ScrollToNewCard;
         private Action<int> AskForDecision;
 
-        public MineExploringViewModel(Action<int> ScrollToNewCard, Action<int> AskForDecision)
+        private IGameManager GameManager;
+
+        public MineExploringViewModel(Action<int> ScrollToNewCard, Action<int> AskForDecision, IGameManager manager)
         {
+            this.GameManager = manager;
             this.playerUID = FirebaseAuthManager.GetUserUID();
             this.ScrollToNewCard = ScrollToNewCard;
             this.AskForDecision = AskForDecision;
@@ -86,6 +92,7 @@ namespace EmeraldRush.ViewModels.Game
             this.PathLength = 0;
 
             InitializeObjects();
+            
 
         }
 

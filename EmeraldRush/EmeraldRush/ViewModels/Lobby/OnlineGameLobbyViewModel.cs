@@ -1,4 +1,5 @@
-﻿using EmeraldRush.Services;
+﻿using EmeraldRush.Model.GameManager;
+using EmeraldRush.Services;
 using EmeraldRush.Services.FirebaseAuthService;
 using EmeraldRush.Services.FirebaseDB;
 using System;
@@ -18,7 +19,7 @@ namespace EmeraldRush.ViewModels.Lobby
             LobbyStatus = "Select you today`s game type!";
         }
 
-        public async Task SignInToPlayersQueue(int type, Action gameFoundCallbck)
+        public async Task SignInToPlayersQueue(int type, Action<IGameManager> gameFoundCallbck)
         {
             string userUID = await FirebaseAuthManager.LoginAndGetUID();
             LogManager.Print("Get user UID: "+userUID);
@@ -28,7 +29,7 @@ namespace EmeraldRush.ViewModels.Lobby
                 LobbyStatus = "Game found, connecting...";
                 MessagingCenter.Unsubscribe<LobbyManager>(this, AplicationConstants.GAME_FOUND_MSG);
                 Console.WriteLine("Message recived");
-                gameFoundCallbck.Invoke();
+                gameFoundCallbck.Invoke(new OnlineGameManager());
             });
 
             bool resoult = false;

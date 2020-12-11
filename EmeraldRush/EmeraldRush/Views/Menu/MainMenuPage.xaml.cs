@@ -27,5 +27,10 @@ namespace EmeraldRush.Views.Menu
         {
             this.Navigation.PushModalAsync(new SettingsPage());
         }
+
+        private void AI_Mode_Selected(object sender, EventArgs e)
+        {
+            this.Navigation.PushModalAsync(new SinglePlayerLobbyPage());
+        }
     }
 }

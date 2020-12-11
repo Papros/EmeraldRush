@@ -1,4 +1,7 @@
-﻿using EmeraldRush.ViewModels.Game;
+﻿using EmeraldRush.Model.ConfigEnum;
+using EmeraldRush.Model.GameEnum;
+using EmeraldRush.Model.GameManager;
+using EmeraldRush.ViewModels.Game;
 using System;
 
 using Xamarin.Forms;
@@ -10,11 +13,11 @@ namespace EmeraldRush.Views.Game
     public partial class MineExploringPage : ContentPage
     {
         readonly MineExploringViewModel viewModel;
-        public MineExploringPage()
+        public MineExploringPage(IGameManager manager)
         {
             InitializeComponent();
 
-            this.BindingContext = viewModel = new MineExploringViewModel(ScrollToLowerCard, AskForDecision);
+            this.BindingContext = viewModel = new MineExploringViewModel(ScrollToLowerCard, AskForDecision, manager);
 
         }
 

@@ -1,4 +1,5 @@
-﻿using EmeraldRush.Services;
+﻿using EmeraldRush.Model.GameManager;
+using EmeraldRush.Services;
 using EmeraldRush.ViewModels.Lobby;
 using EmeraldRush.Views.Game;
 using System;
@@ -35,10 +36,10 @@ namespace EmeraldRush.Views.Lobby
             Task.Run( () => this.viewModel.SignInToPlayersQueue(8, OpenViewPage) );
         }
 
-        private void OpenViewPage()
+        private void OpenViewPage(IGameManager manager)
         {
             LogManager.Print("Opening MainExploringPage from GameLobby");
-            Device.BeginInvokeOnMainThread( () => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage()) );
+            Device.BeginInvokeOnMainThread( () => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage(manager)) );
             
         }
 

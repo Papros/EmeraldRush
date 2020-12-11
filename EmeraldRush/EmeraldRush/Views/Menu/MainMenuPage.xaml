@@ -7,6 +7,8 @@
 
             <Label Text="Emerald Rush" />
 
+            <Button Text="Play vs. AI" Clicked="AI_Mode_Selected" />
+
             <Button Text="Play With Others!" Clicked="Multiplayer_Clicked" />
 
             <Button Text="Settings" Clicked="Settings_Clicked" />

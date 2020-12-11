@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmeraldRush.Views.Lobby.SinglePlayerLobbyPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="10*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+            <Label Text="Single player" />
+
+            <StackLayout>
+                <StackLayout>
+                    <Label Text="Decision time:" />
+                    <Label Text="{Binding DecisionTime}" />
+                </StackLayout>
+                <Slider x:Name="DecisionTimeSlider" Value="{Binding DecisionTime}"/>
+            </StackLayout>
+
+            <StackLayout>
+                <StackLayout>
+                    <Label Text="Dragon`s deep:" />
+                    <Label Text="{Binding DragonDeepText}" />
+                </StackLayout>
+                <Slider x:Name="DragonsDeepSlider" Value="{Binding DragonsDeep}"/>
+            </StackLayout>
+
+            <StackLayout>
+                <StackLayout>
+                    <Label Text="RoundNumber:" />
+                    <Label Text="{Binding RoundNumber}" />
+                </StackLayout>
+                <Slider x:Name="RoundNumberSlider" Value="{Binding RoundNumber}"/>
+            </StackLayout>
+
+            <StackLayout>
+                <Button Text="Add_player" Clicked="AddPlayer"/>
+                <Label Text="{Binding PlayerNumber}" />
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding Bots}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Name}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+            <Button Text="START GAME" Clicked="StartSinglePlayerGame"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
