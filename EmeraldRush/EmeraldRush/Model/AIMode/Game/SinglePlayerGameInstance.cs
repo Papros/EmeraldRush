@@ -6,36 +6,34 @@ using EmeraldRush.Model.GameModel;
 using EmeraldRush.Services;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace EmeraldRush.Model.AIMode.Game
 {
     class SinglePlayerGameInstance
     {
-        private AIPlayer[] botPlayer;
+        private AIPlayer[] bots;
         private SinglePlayerGameConfig gameConfig;
         private PlayerDecision[] playersDecisions;
         private bool[] isExploring;
-        private List<int> RemovedCard;
-        public GameInstance GameInstance;
-        private CardDeck deck;
-        private Action<GameInstance> UIupdate;
-        private bool abortGame;
-        private int timeTolerance;
+        private List<int> cardRemoved;
+        public GameInstance PublicGameData;
+        private CardDeck cardDeck;
+        private Action<GameInstance> updateUI;
+        private bool isGameAborted;
+        private int decisionTimeTolerance;
 
         public SinglePlayerGameInstance(SinglePlayerGameConfig config)
         {
-            this.deck = new CardDeck();
-            this.gameConfig = config;
-            this.botPlayer = config.botList;
-            this.RemovedCard = new List<int>();
-            this.timeTolerance = 2;
+            cardDeck = new CardDeck();
+            gameConfig = config;
+            bots = config.BotList;
+            cardRemoved = new List<int>();
+            decisionTimeTolerance = 2;
             List<PlayersPublic> playersPublic = new List<PlayersPublic>();
-            
 
-            foreach(AIPlayer bot in botPlayer)
+
+            foreach (AIPlayer bot in bots)
             {
                 playersPublic.Add(new PlayersPublic(playersPublic.Count, bot.Name, 0, 0, "bot" + playersPublic.Count + "_" + bot.Name));
 
@@ -47,12 +45,12 @@ namespace EmeraldRush.Model.AIMode.Game
                 }
             }
 
-            playersPublic.Add(new PlayersPublic(playersPublic.Count, config.PlayerNickname, 0,0, "p0_"+config.PlayerNickname));
+            playersPublic.Add(new PlayersPublic(playersPublic.Count, config.PlayerNickname, 0, 0, "p0_" + config.PlayerNickname));
 
             isExploring = new bool[playersPublic.Count];
             playersDecisions = new PlayerDecision[playersPublic.Count];
 
-            GameInstance = new GameInstance()
+            PublicGameData = new GameInstance()
             {
                 CurrentMineID = 0,
                 DecisionTime = gameConfig.DecisionTime,
@@ -66,9 +64,9 @@ namespace EmeraldRush.Model.AIMode.Game
                 GameUID = "SinglePlayerGame"
             };
 
-            for(int iter=0; iter < GameInstance.MineNumber; iter++)
+            for (int iter = 0; iter < PublicGameData.MineNumber; iter++)
             {
-                GameInstance.Mines[iter] = new Mine();
+                PublicGameData.Mines[iter] = new Mine();
             }
 
 
@@ -76,14 +74,14 @@ namespace EmeraldRush.Model.AIMode.Game
 
         public string GetUserUID()
         {
-            return GameInstance.PlayersPublic[GameInstance.PlayersPublic.Length-1].uid;
+            return PublicGameData.PlayersPublic[PublicGameData.PlayersPublic.Length - 1].uid;
         }
 
         public GameInstance Next()
         {
-            LogManager.Print("gs("+GameInstance.RoundID+"): " + GameInstance.PublicState.ToString(), "SinglePlayerGameInstance");
+            LogManager.Print("gs(" + PublicGameData.RoundID + "): " + PublicGameData.PublicState.ToString(), "SinglePlayerGameInstance");
 
-            if (GameInstance.PublicState == GameStatus.WAITING_FOR_FIRST)
+            if (PublicGameData.PublicState == GameStatus.WAITING_FOR_FIRST)
             {
                 PlayFirstCard();
             }
@@ -92,73 +90,75 @@ namespace EmeraldRush.Model.AIMode.Game
                 PlayNextCard();
             }
 
-            LogManager.Print("gs(" + GameInstance.RoundID + "): " + GameInstance.PublicState.ToString(), "SinglePlayerGameInstance");
-            UIupdate(this.GameInstance);
+            LogManager.Print("gs(" + PublicGameData.RoundID + "): " + PublicGameData.PublicState.ToString(), "SinglePlayerGameInstance");
+            updateUI(PublicGameData);
 
-            if (GameInstance.PublicState == GameStatus.WAITING_FOR_MOVE )
+            if (PublicGameData.PublicState == GameStatus.WAITING_FOR_MOVE)
             {
                 LogManager.Print("waiting for move...", "SinglePlayerGameInstance");
-                ScheduleNextMove(GameInstance.DecisionTime+timeTolerance);
+                ScheduleNextMove(PublicGameData.DecisionTime + decisionTimeTolerance);
 
-            }else if(GameInstance.PublicState == GameStatus.ROUND_SUMMARY)
+            }
+            else if (PublicGameData.PublicState == GameStatus.ROUND_SUMMARY)
             {
                 LogManager.Print("time for round summary", "SinglePlayerGameInstance");
-                ScheduleNextMove(GameInstance.RoundCooldownTime + timeTolerance);
+                ScheduleNextMove(PublicGameData.RoundCooldownTime + decisionTimeTolerance);
             }
 
-            return this.GameInstance;
+            return PublicGameData;
         }
 
         private void PlayNextCard()
         {
-            
+
             List<int> goingPlayer = new List<int>();
             List<int> leavingPlayer = new List<int>();
-        
-            for(int iter=0; iter < playersDecisions.Length; iter++)
+
+            for (int iter = 0; iter < playersDecisions.Length; iter++)
             {
                 if (playersDecisions[iter] == PlayerDecision.GO_FURTHER && isExploring[iter])
                 {
                     goingPlayer.Add(iter);
 
-                }else if(isExploring[iter])
+                }
+                else if (isExploring[iter])
                 {
                     leavingPlayer.Add(iter);
                 }
             }
-        
-            if(goingPlayer.Count == 0)
+
+            if (goingPlayer.Count == 0)
             {
 
-                for(int iter=0; iter < playersDecisions.Length; iter++)
+                for (int iter = 0; iter < playersDecisions.Length; iter++)
                 {
                     playersDecisions[iter] = PlayerDecision.GO_FURTHER;
                     isExploring[iter] = true;
                 }
 
-                foreach(int playerId in leavingPlayer)
+                foreach (int playerId in leavingPlayer)
                 {
-                    if(leavingPlayer.Count == 1)
+                    if (leavingPlayer.Count == 1)
                     {
-                        GameInstance.PlayersPublic[playerId].pocket += GameInstance.GetCurrent().EmeraldsForTake;
-                        GameInstance.GetCurrent().EmeraldsForTake = 0;
+                        PublicGameData.PlayersPublic[playerId].pocket += PublicGameData.GetCurrent().EmeraldsForTake;
+                        PublicGameData.GetCurrent().EmeraldsForTake = 0;
                     }
 
-                    GameInstance.PlayersPublic[playerId].chest += GameInstance.PlayersPublic[playerId].pocket;
-                    GameInstance.PlayersPublic[playerId].status = PlayerStatus.RESTING;
+                    PublicGameData.PlayersPublic[playerId].chest += PublicGameData.PlayersPublic[playerId].pocket;
+                    PublicGameData.PlayersPublic[playerId].status = PlayerStatus.RESTING;
                 }
 
-                if( GameInstance.MineNumber > GameInstance.CurrentMineID + 1 )
+                if (PublicGameData.MineNumber > PublicGameData.CurrentMineID + 1)
                 {
-                    GameInstance.GetCurrent().MineState = MineStatus.VISITED;
-                    GameInstance.CurrentMineID++;
-                    GameInstance.GetCurrent().MineState = MineStatus.CURRENT;
-                    GameInstance.PublicState = GameStatus.ROUND_SUMMARY;
+                    PublicGameData.GetCurrent().MineState = MineStatus.VISITED;
+                    PublicGameData.CurrentMineID++;
+                    PublicGameData.GetCurrent().MineState = MineStatus.CURRENT;
+                    PublicGameData.PublicState = GameStatus.ROUND_SUMMARY;
                 }
                 else
                 {
-                    GameInstance.GetCurrent().MineState = MineStatus.VISITED;
-                    GameInstance.PublicState = GameStatus.FINISHED;
+                    PublicGameData.GetCurrent().MineState = MineStatus.VISITED;
+                    PublicGameData.PublicState = GameStatus.FINISHED;
                 }
 
 
@@ -172,63 +172,59 @@ namespace EmeraldRush.Model.AIMode.Game
                 {
                     if (leavingPlayer.Count == 1)
                     {
-                        GameInstance.PlayersPublic[playerId].pocket += GameInstance.GetCurrent().EmeraldsForTake;
-                        GameInstance.GetCurrent().EmeraldsForTake = 0;
+                        PublicGameData.PlayersPublic[playerId].pocket += PublicGameData.GetCurrent().EmeraldsForTake;
+                        PublicGameData.GetCurrent().EmeraldsForTake = 0;
                     }
 
-                    GameInstance.PlayersPublic[playerId].chest += GameInstance.PlayersPublic[playerId].pocket;
-                    GameInstance.PlayersPublic[playerId].status = PlayerStatus.RESTING;
+                    PublicGameData.PlayersPublic[playerId].chest += PublicGameData.PlayersPublic[playerId].pocket;
+                    PublicGameData.PlayersPublic[playerId].status = PlayerStatus.RESTING;
                     isExploring[playerId] = false;
                 }
 
 
                 //selecting card
-                var selectedCard = deck.GetRandomCard(RemovedCard, this.GameInstance.GetCurrent().Node, DragonPossible());
+                Card selectedCard = cardDeck.GetRandomCard(cardRemoved, PublicGameData.GetCurrent().Node, DragonPossible());
 
-                GameInstance.GetCurrent().Node.Add(selectedCard.CardID);
+                PublicGameData.GetCurrent().Node.Add(selectedCard.CardID);
 
                 //If emeralds selected
-                if(selectedCard.Type == CardType.ARTIFACT || selectedCard.Type == CardType.EMERALDS)
+                if (selectedCard.Type == CardType.ARTIFACT || selectedCard.Type == CardType.EMERALDS)
                 {
-                    int rest = selectedCard.EmeraldValue % GameInstance.PlayersPublic.Length;
-                    int byPlayer = (selectedCard.EmeraldValue - rest) / GameInstance.PlayersPublic.Length;
+                    int rest = selectedCard.EmeraldValue % goingPlayer.Count;
+                    int byPlayer = (selectedCard.EmeraldValue - rest) / goingPlayer.Count;
 
-                    if (rest + GameInstance.GetCurrent().EmeraldsForTake > GameInstance.PlayersPublic.Length)
+                    if (rest + PublicGameData.GetCurrent().EmeraldsForTake > goingPlayer.Count)
                     {
-                        int forF = rest + GameInstance.GetCurrent().EmeraldsForTake;
-                        rest = forF % GameInstance.PlayersPublic.Length;
-                        byPlayer += (forF - rest) / GameInstance.PlayersPublic.Length;
+                        int forF = rest + PublicGameData.GetCurrent().EmeraldsForTake;
+                        rest = forF % goingPlayer.Count;
+                        byPlayer += (forF - rest) / goingPlayer.Count;
                     }
 
-                    foreach (PlayersPublic player in GameInstance.PlayersPublic)
+                    foreach (int playerId in goingPlayer)
                     {
-                        player.pocket += byPlayer;
+                        this.PublicGameData.PlayersPublic[playerId].pocket += byPlayer;
+                        playersDecisions[playerId] = PlayerDecision.UNKNOWN;
                     }
 
-                    GameInstance.GetCurrent().EmeraldsForTake = rest;
+                    PublicGameData.GetCurrent().EmeraldsForTake = rest;
 
-                    foreach(int playerID in goingPlayer)
-                    {
-                        playersDecisions[playerID] = PlayerDecision.UNKNOWN;
-                    }
-
-                    GameInstance.PublicState = GameStatus.WAITING_FOR_MOVE;
-                    GameInstance.RoundID++;
+                    PublicGameData.PublicState = GameStatus.WAITING_FOR_MOVE;
+                    PublicGameData.RoundID++;
                     return;
                 }
                 else
                 {
-                    var resoult = CheckIfRoundIsFinnished(GameInstance.GetCurrent().Node, selectedCard.Type);
-                
-                    if(resoult.Count > 0 || selectedCard.Type == CardType.DRAGON)
+                    List<int> resoult = CheckIfRoundIsFinnished(PublicGameData.GetCurrent().Node, selectedCard.Type);
+
+                    if (resoult.Count > 0 || selectedCard.Type == CardType.DRAGON)
                     {
 
                         if (resoult.Count > 0)
-                            RemovedCard.AddRange(resoult);
+                            cardRemoved.AddRange(resoult);
                         else
-                            RemovedCard.Add(selectedCard.CardID);
+                            cardRemoved.Add(selectedCard.CardID);
 
-                        for(int iter=0; iter < playersDecisions.Length; iter++)
+                        for (int iter = 0; iter < playersDecisions.Length; iter++)
                         {
                             playersDecisions[iter] = PlayerDecision.GO_FURTHER;
                             isExploring[iter] = true;
@@ -237,26 +233,26 @@ namespace EmeraldRush.Model.AIMode.Game
 
                         goingPlayer.ForEach(playerId =>
                         {
-                            GameInstance.PlayersPublic[playerId].status = PlayerStatus.DEAD;
-                            GameInstance.PlayersPublic[playerId].pocket = 0;
+                            PublicGameData.PlayersPublic[playerId].status = PlayerStatus.DEAD;
+                            PublicGameData.PlayersPublic[playerId].pocket = 0;
                         });
 
 
-                        if (GameInstance.MineNumber > GameInstance.CurrentMineID + 1)
+                        if (PublicGameData.MineNumber > PublicGameData.CurrentMineID + 1)
                         {
-                            GameInstance.GetCurrent().MineState = MineStatus.VISITED;
-                            GameInstance.CurrentMineID++;
-                            GameInstance.GetCurrent().MineState = MineStatus.CURRENT;
-                            GameInstance.PublicState = GameStatus.ROUND_SUMMARY;
+                            PublicGameData.GetCurrent().MineState = MineStatus.VISITED;
+                            PublicGameData.CurrentMineID++;
+                            PublicGameData.GetCurrent().MineState = MineStatus.CURRENT;
+                            PublicGameData.PublicState = GameStatus.ROUND_SUMMARY;
                         }
                         else
                         {
-                            GameInstance.GetCurrent().MineState = MineStatus.VISITED;
-                            GameInstance.PublicState = GameStatus.FINISHED;
+                            PublicGameData.GetCurrent().MineState = MineStatus.VISITED;
+                            PublicGameData.PublicState = GameStatus.FINISHED;
                         }
 
 
-                        LogManager.Print("Round finished by: "+selectedCard.Type.ToString(), "SinglePlayerGameInstance");
+                        LogManager.Print("Round finished by: " + selectedCard.Type.ToString(), "SinglePlayerGameInstance");
                         return;
 
 
@@ -264,16 +260,16 @@ namespace EmeraldRush.Model.AIMode.Game
                     else
                     {
 
-                        for(int iter = 0; iter<0; iter++)
+                        for (int iter = 0; iter < 0; iter++)
                         {
                             playersDecisions[iter] = PlayerDecision.UNKNOWN;
                         }
 
-                        GameInstance.PublicState = GameStatus.WAITING_FOR_MOVE;
-                        GameInstance.RoundID++;
+                        PublicGameData.PublicState = GameStatus.WAITING_FOR_MOVE;
+                        PublicGameData.RoundID++;
                         return;
                     }
-                
+
                 }
 
             }
@@ -282,83 +278,84 @@ namespace EmeraldRush.Model.AIMode.Game
 
         private bool DragonPossible()
         {
-            if (this.gameConfig.DragonsMinimalDeep < 0)
+            if (gameConfig.DragonsMinimalDeep < 0)
             {
                 return false;
             }
             else
             {
-                return (this.GameInstance.GetCurrent().Node.Count >= this.gameConfig.DragonsMinimalDeep);
+                return (PublicGameData.GetCurrent().Node.Count >= gameConfig.DragonsMinimalDeep);
             }
         }
 
         private void PlayFirstCard()
         {
-            var selectedCard = deck.GetRandomCard(RemovedCard, this.GameInstance.GetCurrent().Node, DragonPossible());
+            Card selectedCard = cardDeck.GetRandomCard(cardRemoved, PublicGameData.GetCurrent().Node, DragonPossible());
 
-            foreach( PlayersPublic player in GameInstance.PlayersPublic)
+            foreach (PlayersPublic player in PublicGameData.PlayersPublic)
             {
                 player.status = PlayerStatus.EXPLORING;
                 player.pocket = 0;
             }
 
-            if(selectedCard.Type == CardType.ARTIFACT || selectedCard.Type == CardType.EMERALDS)
+            if (selectedCard.Type == CardType.ARTIFACT || selectedCard.Type == CardType.EMERALDS)
             {
-                int rest = selectedCard.EmeraldValue % GameInstance.PlayersPublic.Length;
-                int byPlayer = (selectedCard.EmeraldValue - rest) / GameInstance.PlayersPublic.Length;
-                
-                if(rest + GameInstance.GetCurrent().EmeraldsForTake > GameInstance.PlayersPublic.Length)
+                int rest = selectedCard.EmeraldValue % PublicGameData.PlayersPublic.Length;
+                int byPlayer = (selectedCard.EmeraldValue - rest) / PublicGameData.PlayersPublic.Length;
+
+                if (rest + PublicGameData.GetCurrent().EmeraldsForTake > PublicGameData.PlayersPublic.Length)
                 {
-                    int forF = rest + GameInstance.GetCurrent().EmeraldsForTake;
-                    rest = forF % GameInstance.PlayersPublic.Length;
-                    byPlayer += (forF - rest) / GameInstance.PlayersPublic.Length;
+                    int forF = rest + PublicGameData.GetCurrent().EmeraldsForTake;
+                    rest = forF % PublicGameData.PlayersPublic.Length;
+                    byPlayer += (forF - rest) / PublicGameData.PlayersPublic.Length;
                 }
 
-                foreach (PlayersPublic player in GameInstance.PlayersPublic)
+                foreach (PlayersPublic player in PublicGameData.PlayersPublic)
                 {
                     player.pocket += byPlayer;
                 }
 
-                GameInstance.GetCurrent().EmeraldsForTake += rest;
+                PublicGameData.GetCurrent().EmeraldsForTake += rest;
             }
 
-            GameInstance.GetCurrent().Node.Add(selectedCard.CardID);
+            PublicGameData.GetCurrent().Node.Add(selectedCard.CardID);
 
-            for(int iter = 0; iter < playersDecisions.Length; iter++)
+            for (int iter = 0; iter < playersDecisions.Length; iter++)
             {
                 playersDecisions[iter] = PlayerDecision.UNKNOWN;
                 isExploring[iter] = true;
             }
 
-            GameInstance.PublicState = GameStatus.WAITING_FOR_MOVE;
-            GameInstance.RoundID++;
+            PublicGameData.PublicState = GameStatus.WAITING_FOR_MOVE;
+            PublicGameData.RoundID++;
         }
 
-        private void LetBotsDecide(GameInstance game) { 
+        private void LetBotsDecide(GameInstance game)
+        {
 
-            for(int iter = 0; iter < botPlayer.Length; iter++)
+            for (int iter = 0; iter < bots.Length; iter++)
             {
-                if( game.PlayersPublic[iter].status == PlayerStatus.EXPLORING) playersDecisions[iter] = botPlayer[iter].DecisionStrategy.makeDecision(game, iter);
+                if (game.PlayersPublic[iter].status == PlayerStatus.EXPLORING) playersDecisions[iter] = bots[iter].DecisionStrategy.MakeDecision(game, iter);
             }
 
         }
 
         public void MakeDecision(bool decision)
         {
-            LogManager.Print("Decision made: "+decision, "SinglePlayerGameInstance");
-            playersDecisions[GameInstance.PlayersPublic.Length - 1] = (decision ? PlayerDecision.GO_FURTHER : PlayerDecision.GO_BACK);
+            LogManager.Print("Decision made: " + decision, "SinglePlayerGameInstance");
+            playersDecisions[PublicGameData.PlayersPublic.Length - 1] = (decision ? PlayerDecision.GO_FURTHER : PlayerDecision.GO_BACK);
         }
 
         public void Start(Action<GameInstance> callback)
         {
-            this.UIupdate = callback;
-            this.abortGame = false;
+            updateUI = callback;
+            isGameAborted = false;
         }
-        
+
         public void StopGame()
         {
-            this.abortGame = true;
-            this.GameInstance.PublicState = GameStatus.FINISHED;
+            isGameAborted = true;
+            PublicGameData.PublicState = GameStatus.FINISHED;
         }
 
         public void ScheduleNextMove(int seconds)
@@ -366,14 +363,14 @@ namespace EmeraldRush.Model.AIMode.Game
             LogManager.Print("waiting", "SinglePlayerGameInstance");
             Device.StartTimer(TimeSpan.FromSeconds(seconds), () =>
             {
-                if (!this.abortGame)
+                if (!isGameAborted)
                 {
                     LogManager.Print("doing move;", "SinglePlayerGameInstance");
-                    if(GameInstance.PublicState == GameStatus.WAITING_FOR_MOVE)
-                        LetBotsDecide(GameInstance);
+                    if (PublicGameData.PublicState == GameStatus.WAITING_FOR_MOVE)
+                        LetBotsDecide(PublicGameData);
 
                     string dec = "";
-                    foreach(PlayerDecision decision in playersDecisions)
+                    foreach (PlayerDecision decision in playersDecisions)
                     {
                         dec += decision.ToString() + "; ";
                     }
@@ -390,9 +387,9 @@ namespace EmeraldRush.Model.AIMode.Game
         {
             List<int> cardtoRemove = new List<int>();
 
-            cardtoRemove = usedCard.FindAll(cardID => deck.GetCardOfID(cardID).Type == selectedType);
+            cardtoRemove = usedCard.FindAll(cardID => cardDeck.GetCard(cardID).Type == selectedType);
 
-            if(cardtoRemove.Count == 3)
+            if (cardtoRemove.Count == 3)
             {
                 return cardtoRemove;
             }
@@ -402,7 +399,7 @@ namespace EmeraldRush.Model.AIMode.Game
             }
 
         }
-       
+
 
     }
 }

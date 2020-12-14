@@ -11,12 +11,12 @@ namespace EmeraldRush.Services.FirebaseDB
 {
     class LobbyManager
     {
-        public static IDisposable playerDisposble;
+        private static IDisposable playerDisposble;
         public static async Task<bool> SignSelfToGameList(GameMode type, String UserUID)
         {
-            if(UserUID != string.Empty)
+            if (UserUID != string.Empty)
             {
-                Player player = new Player(string.Empty, "Adventurer",UserUID);
+                Player player = new Player(string.Empty, "Adventurer", UserUID);
 
                 try
                 {
@@ -26,9 +26,9 @@ namespace EmeraldRush.Services.FirebaseDB
                     {
                         if (Job.EventType == FirebaseEventType.InsertOrUpdate && !string.IsNullOrEmpty(Job.Object.GameUID))
                         {
-                            if( FirebaseGameManager.Initialize(Job.Object.GameUID).SubscribeToGame())
+                            if (FirebaseGameManager.Initialize(Job.Object.GameUID).SubscribeToGame())
                             {
-                                LogManager.Print("Game subscribed: "+Job.Object.GameUID, "LobbyManager");
+                                LogManager.Print("Game subscribed: " + Job.Object.GameUID, "LobbyManager");
                                 MessagingCenter.Send<LobbyManager>(new LobbyManager(), AplicationConstants.GAME_FOUND_MSG);
                                 UnsubscribePlayerAccount();
                             }
@@ -41,12 +41,13 @@ namespace EmeraldRush.Services.FirebaseDB
                     });
 
                     QueueToken token = new QueueToken(UserUID, type.ToString());
-                 
+
                     await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.QUEUE).Child(UserUID).PatchAsync(token);
 
                     return true;
 
-                }catch( Firebase.Database.FirebaseException ex)
+                }
+                catch (Firebase.Database.FirebaseException ex)
                 {
                     LogManager.Print("Account subscribe FirebaseException: " + ex, "LobbyManager");
                     return false;
@@ -66,7 +67,7 @@ namespace EmeraldRush.Services.FirebaseDB
 
         public static void UnsubscribePlayerAccount()
         {
-            if(playerDisposble != null)
+            if (playerDisposble != null)
             {
                 playerDisposble.Dispose();
             }

@@ -22,7 +22,7 @@ namespace EmeraldRush.ViewModels.Lobby
         public async Task SignInToPlayersQueue(int type, Action<IGameManager> gameFoundCallbck)
         {
             string userUID = await FirebaseAuthManager.LoginAndGetUID();
-            LogManager.Print("Get user UID: "+userUID);
+            LogManager.Print("Get user UID: " + userUID);
 
             MessagingCenter.Subscribe<LobbyManager>(this, AplicationConstants.GAME_FOUND_MSG, (sender) =>
             {
@@ -36,9 +36,9 @@ namespace EmeraldRush.ViewModels.Lobby
 
             switch (type)
             {
-                case 2: resoult = await LobbyManager.SignSelfToGameList(Model.GameEnum.GameMode.GAME_2_PLAYERS,userUID); break;
-                case 4: resoult = await LobbyManager.SignSelfToGameList(Model.GameEnum.GameMode.GAME_4_PLAYERS,userUID); break;
-                case 8: resoult = await LobbyManager.SignSelfToGameList(Model.GameEnum.GameMode.GAME_8_PLAYERS,userUID); break;
+                case 2: resoult = await LobbyManager.SignSelfToGameList(Model.GameEnum.GameMode.GAME_2_PLAYERS, userUID); break;
+                case 4: resoult = await LobbyManager.SignSelfToGameList(Model.GameEnum.GameMode.GAME_4_PLAYERS, userUID); break;
+                case 8: resoult = await LobbyManager.SignSelfToGameList(Model.GameEnum.GameMode.GAME_8_PLAYERS, userUID); break;
             }
 
             if (!resoult)
@@ -49,7 +49,7 @@ namespace EmeraldRush.ViewModels.Lobby
             LogManager.Print("Signed.");
             LobbyStatus = "Looking for another adventurers...";
 
-            
+
         }
 
     }

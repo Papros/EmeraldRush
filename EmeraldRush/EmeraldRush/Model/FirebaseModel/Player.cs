@@ -8,9 +8,9 @@
 
         public Player(string game, string name, string userUid)
         {
-            this.Nickname = name;
-            this.GameUID = game;
-            this.UserUID = userUid;
+            Nickname = name;
+            GameUID = game;
+            UserUID = userUid;
         }
     }
 }

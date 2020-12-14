@@ -4,7 +4,6 @@ using EmeraldRush.Model.GameManager;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace EmeraldRush.ViewModels.Lobby
 {
@@ -22,8 +21,9 @@ namespace EmeraldRush.ViewModels.Lobby
         public int DragonsDeep
         {
             get { return dragonsDeep; }
-            set {
-                this.DragonDeepText = (value < 0 ? "NO DRAGON" : DragonsDeep.ToString());
+            set
+            {
+                DragonDeepText = (value < 0 ? "NO DRAGON" : DragonsDeep.ToString());
                 SetProperty(ref dragonsDeep, value);
             }
         }
@@ -40,9 +40,10 @@ namespace EmeraldRush.ViewModels.Lobby
         public ObservableCollection<AIPlayer> Bots
         {
             get { return bots; }
-            set {
+            set
+            {
                 SetProperty(ref bots, value);
-                this.PlayerNumber = bots.Count + " / " + maxPlayernumber;
+                PlayerNumber = bots.Count + " / " + maxPlayernumber;
             }
         }
 
@@ -70,7 +71,7 @@ namespace EmeraldRush.ViewModels.Lobby
             if (bots.Count < maxPlayernumber)
             {
                 Bots.Add(new AIPlayer("Bob", 5, GameStyle.RANDOM));
-                this.PlayerNumber = bots.Count + " / " + maxPlayernumber;
+                PlayerNumber = bots.Count + " / " + maxPlayernumber;
             }
         }
 
@@ -81,8 +82,8 @@ namespace EmeraldRush.ViewModels.Lobby
                 Console.WriteLine("Removed");
                 Bots.Remove(bot as AIPlayer);
             }
-            this.IsSelected = false;
-            this.Selected = null;
+            IsSelected = false;
+            Selected = null;
         }
 
         private bool isSelected;
@@ -126,24 +127,24 @@ namespace EmeraldRush.ViewModels.Lobby
             get { return selected; }
             set
             {
-                if(value != null)
+                if (value != null)
                 {
-                    this.SelectedDiff = value.Difficult;
-                    this.SelectedName = value.Name;
-                    this.SelectedStyle = value.Style;
-                    this.styleIndex = styleList.IndexOf(value.Style);
+                    SelectedDiff = value.Difficult;
+                    SelectedName = value.Name;
+                    SelectedStyle = value.Style;
+                    styleIndex = styleList.IndexOf(value.Style);
                     IsSelected = true;
                 }
                 SetProperty(ref selected, value);
             }
         }
-        
-        public void selectionDone()
+
+        public void IsSelectionDone()
         {
 
             int index = bots.IndexOf(Selected);
 
-            if(index >=0 && index < bots.Count)
+            if (index >= 0 && index < bots.Count)
             {
                 bots[index] = new AIPlayer(selectedName, selectedDiff, styleList[styleIndex]);
                 Console.WriteLine("Bots[" + index + "] : " + Bots[index].Name + " : " + Bots[index].Difficult + " : " + Bots[index].Style.ToString());
@@ -152,7 +153,7 @@ namespace EmeraldRush.ViewModels.Lobby
             IsSelected = false;
         }
 
-        private List<GameStyle> styleList = new List<GameStyle>(){ GameStyle.BRAVE, GameStyle.COWARDLY, GameStyle.RANDOM, GameStyle.STRATEGIC };
+        private List<GameStyle> styleList = new List<GameStyle>() { GameStyle.BRAVE, GameStyle.COWARDLY, GameStyle.RANDOM, GameStyle.STRATEGIC };
         public List<string> StyleList { get; set; }
 
 
@@ -160,10 +161,10 @@ namespace EmeraldRush.ViewModels.Lobby
         {
             SinglePlayerGameConfig config = new SinglePlayerGameConfig()
             {
-                MineNumber = this.RoundNumber,
-                botList = new List<AIPlayer>(bots).ToArray(),
-                DecisionTime = this.DecisionTime,
-                DragonsMinimalDeep = this.DragonsDeep,
+                MineNumber = RoundNumber,
+                BotList = new List<AIPlayer>(bots).ToArray(),
+                DecisionTime = DecisionTime,
+                DragonsMinimalDeep = DragonsDeep,
                 PlayerNickname = "Adventurer",
             };
 
@@ -183,17 +184,13 @@ namespace EmeraldRush.ViewModels.Lobby
 
         private void SetDefault()
         {
-            this.DecisionTime = 15;
-            this.DragonsDeep = 5;
-            this.RoundNumber = 3;
-            this.bots = new ObservableCollection<AIPlayer>();
+            DecisionTime = 15;
+            DragonsDeep = 5;
+            RoundNumber = 3;
+            bots = new ObservableCollection<AIPlayer>();
             AddAIPlayer();
             AddAIPlayer();
             AddAIPlayer();
-
-            this.Selected = bots[0];
-            this.isSelected = false;
-
             StyleList = new List<string>();
             styleList.ForEach(style => StyleList.Add(style.ToString()));
         }

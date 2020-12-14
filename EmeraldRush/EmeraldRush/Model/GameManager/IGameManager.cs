@@ -1,7 +1,5 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.GameManager
 {

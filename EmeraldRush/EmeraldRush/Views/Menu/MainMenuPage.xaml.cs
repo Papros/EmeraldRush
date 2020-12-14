@@ -20,17 +20,17 @@ namespace EmeraldRush.Views.Menu
 
         private void Multiplayer_Clicked(object sender, EventArgs e)
         {
-            this.Navigation.PushModalAsync(new OnlineGameLobbyPage());
+            Navigation.PushModalAsync(new OnlineGameLobbyPage());
         }
 
         private void Settings_Clicked(object sender, EventArgs e)
         {
-            this.Navigation.PushModalAsync(new SettingsPage());
+            Navigation.PushModalAsync(new SettingsPage());
         }
 
         private void AI_Mode_Selected(object sender, EventArgs e)
         {
-            this.Navigation.PushModalAsync(new SinglePlayerLobbyPage());
+            Navigation.PushModalAsync(new SinglePlayerLobbyPage());
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EmeraldRush.Model.AIMode.Player
+﻿namespace EmeraldRush.Model.AIMode.Player
 {
     public enum GameStyle
     {

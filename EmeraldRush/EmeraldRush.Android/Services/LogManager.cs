@@ -5,9 +5,9 @@ namespace EmeraldRush.Droid.Services
 
     class LogManager
     {
-        public static void Print(string msg, string sender = "AppLog", int priority = 1)
+        public static void Print(string msg, string senderName = "AppLog", int priority = 1)
         {
-            Console.WriteLine("[" + sender + "] : " + msg);
+            Console.WriteLine("[" + senderName + "] : " + msg);
         }
 
         public static void FastPrint(string msg, bool printFastMsg = true)

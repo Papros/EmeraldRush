@@ -1,8 +1,5 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.GameModel
 {
@@ -17,17 +14,17 @@ namespace EmeraldRush.Model.GameModel
 
         public Player(PlayersPublic player)
         {
-            this.chest = player.chest;
-            this.emotion = player.emotion;
-            this.name = player.name;
-            this.pocket = player.pocket;
-            this.status = player.status;
+            chest = player.chest;
+            emotion = player.emotion;
+            name = player.name;
+            pocket = player.pocket;
+            status = player.status;
 
             switch (status)
             {
-                case PlayerStatus.DEAD: this.statusSymbolPath = "deadSymbol.png";  break;
-                case PlayerStatus.EXPLORING: this.statusSymbolPath = "exploringSymbol.png"; break;
-                case PlayerStatus.RESTING: this.statusSymbolPath = "restingSymbol.png"; break;
+                case PlayerStatus.DEAD: statusSymbolPath = "deadSymbol.png"; break;
+                case PlayerStatus.EXPLORING: statusSymbolPath = "exploringSymbol.png"; break;
+                case PlayerStatus.RESTING: statusSymbolPath = "restingSymbol.png"; break;
             }
         }
     }

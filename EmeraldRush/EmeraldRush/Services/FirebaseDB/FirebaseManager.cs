@@ -4,7 +4,7 @@ namespace EmeraldRush.Services.FirebaseDB
 {
     class FirebaseManager
     {
-        private FirebaseClient DatabaseClient;
+        private FirebaseClient databaseClient;
 
         private static FirebaseManager instance;
 
@@ -22,12 +22,12 @@ namespace EmeraldRush.Services.FirebaseDB
         {
             FirebaseOptions options = new FirebaseOptions { AuthTokenAsyncFactory = async () => await FirebaseAuthService.FirebaseAuthManager.Login() };
 
-            this.DatabaseClient = new FirebaseClient(AplicationConstants.FIRABASE_URL_ADRESS, options );
+            databaseClient = new FirebaseClient(AplicationConstants.FIRABASE_URL_ADRESS, options);
         }
 
         public FirebaseClient GetClient()
         {
-            return this.DatabaseClient;
+            return databaseClient;
         }
 
 

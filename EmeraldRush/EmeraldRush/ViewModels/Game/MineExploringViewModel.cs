@@ -1,16 +1,10 @@
-﻿using EmeraldRush.Model.AIMode.Game;
-using EmeraldRush.Model.ConfigEnum;
-using EmeraldRush.Model.FirebaseModel;
+﻿using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
 using EmeraldRush.Model.GameManager;
 using EmeraldRush.Model.GameModel;
 using EmeraldRush.Services;
-using EmeraldRush.Services.FirebaseAuthService;
-using EmeraldRush.Services.FirebaseDB;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using Player = EmeraldRush.Model.GameModel.Player;
 
 namespace EmeraldRush.ViewModels.Game
@@ -70,37 +64,36 @@ namespace EmeraldRush.ViewModels.Game
         private string playerUID;
         private int playerID;
         private string GameUID;
-        public bool waitingForDecision;
-        public bool makingDecision;
-        private Action<int> ScrollToNewCard;
-        private Action<int> AskForDecision;
-
-        private IGameManager GameManager;
+        public bool WaitingForDecision;
+        private bool makingDecision;
+        private Action<int> scrollToNewCard;
+        private Action<int> askForDecision;
+        private IGameManager gameManager;
 
         public MineExploringViewModel(Action<int> ScrollToNewCard, Action<int> AskForDecision, IGameManager manager)
         {
-            this.GameManager = manager;
-            this.playerUID = manager.GetUserUID();
-            this.ScrollToNewCard = ScrollToNewCard;
-            this.AskForDecision = AskForDecision;
+            gameManager = manager;
+            playerUID = manager.GetUserUID();
+            this.scrollToNewCard = ScrollToNewCard;
+            this.askForDecision = AskForDecision;
 
-            this.Adventurers = new Player[0];
-            this.Nodes = new Card[0];
+            Adventurers = new Player[0];
+            Nodes = new Card[0];
 
-            this.Pocket = 0;
-            this.Chest = 0;
-            this.MineIndex = "0 / 0";
-            this.PathLength = 0;
+            Pocket = 0;
+            Chest = 0;
+            MineIndex = "0 / 0";
+            PathLength = 0;
 
             InitializeObjects();
-            
+
 
         }
 
         private void InitializeObjects()
         {
             LogManager.Print("Game initalizing", "MineExploringVM");
-            GameManager.Subscribe(UpdateData);           
+            gameManager.Subscribe(UpdateData);
         }
 
         private void UpdateData(GameInstance gameInstance)
@@ -109,50 +102,50 @@ namespace EmeraldRush.ViewModels.Game
             {
                 CardDeck deck = new CardDeck();
 
-                this.GameUID = gameInstance.GameUID;
+                GameUID = gameInstance.GameUID;
 
                 if (gameInstance.PlayersPublic != null)
                 {
                     var adventurers = new Player[gameInstance.PlayersPublic.Length];
-                    for(int iter = 0; iter < Adventurers.Length; iter++)
+                    for (int iter = 0; iter < Adventurers.Length; iter++)
                     {
                         adventurers[iter] = new Player(gameInstance.PlayersPublic[iter]);
                     }
-                    this.Adventurers = adventurers;
+                    Adventurers = adventurers;
                 }
 
                 if (gameInstance.GetCurrent() != null)
                 {
-                    this.Nodes = (new Card[]{new Card(-1,CardType.ENTRY)}).Concat(deck.GetThisDeck(gameInstance.GetCurrent().Node.ToArray())).ToArray();
+                    Nodes = (new Card[] { new Card(-1, CardType.ENTRY) }).Concat(deck.GetThisDeck(gameInstance.GetCurrent().Node.ToArray())).ToArray();
                 }
 
-                this.MineIndex = (gameInstance.CurrentMineID + 1).ToString() + " / " + gameInstance.MineNumber.ToString();
-                this.PathLength = nodes.Length;
+                MineIndex = (gameInstance.CurrentMineID + 1).ToString() + " / " + gameInstance.MineNumber.ToString();
+                PathLength = nodes.Length;
 
                 if (gameInstance.GetCurrent() != null)
                 {
-                    this.EmeraldsForTake = gameInstance.GetCurrent().EmeraldsForTake;
+                    EmeraldsForTake = gameInstance.GetCurrent().EmeraldsForTake;
                 }
 
-                var player = gameInstance.GetPlayerData(this.playerUID);
+                var player = gameInstance.GetPlayerData(playerUID);
 
                 if (player != null)
                 {
-                    this.Pocket = player.pocket;
-                    this.Chest = player.chest;
-                    this.playerID = player.id;
-                    this.makingDecision = (player.status == PlayerStatus.EXPLORING && gameInstance.PublicState == GameStatus.WAITING_FOR_MOVE);
+                    Pocket = player.pocket;
+                    Chest = player.chest;
+                    playerID = player.id;
+                    makingDecision = (player.status == PlayerStatus.EXPLORING && gameInstance.PublicState == GameStatus.WAITING_FOR_MOVE);
                 }
 
-                ScrollToNewCard.Invoke(Nodes.Length - 1);
+                scrollToNewCard.Invoke(Nodes.Length - 1);
                 if (makingDecision)
                 {
-                    waitingForDecision = true;
-                    AskForDecision.Invoke(gameInstance.DecisionTime);
+                    WaitingForDecision = true;
+                    askForDecision.Invoke(gameInstance.DecisionTime);
                 }
                 else
                 {
-                    waitingForDecision = false;
+                    WaitingForDecision = false;
                 }
 
             }
@@ -161,9 +154,9 @@ namespace EmeraldRush.ViewModels.Game
 
         public void MakeDecision(bool decision)
         {
-            waitingForDecision = false;
+            WaitingForDecision = false;
 
-            GameManager.MakeDecision(decision, this.playerID, this.GameUID);
+            gameManager.MakeDecision(decision, playerID, GameUID);
 
         }
 

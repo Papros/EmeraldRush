@@ -8,7 +8,7 @@ namespace EmeraldRush.Model.FirebaseModel
 
         public DecisionToken(PlayerDecision decision)
         {
-            this.Decision = (int)decision;
+            Decision = (int)decision;
         }
 
     }

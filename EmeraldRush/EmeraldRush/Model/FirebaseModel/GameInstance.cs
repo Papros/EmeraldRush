@@ -19,12 +19,12 @@ namespace EmeraldRush.Model.FirebaseModel
 
         public GameInstance()
         {
-           
+
         }
 
         public Mine GetCurrent()
         {
-            if(Mines != null)
+            if (Mines != null)
             {
                 if (Mines.Length > CurrentMineID && CurrentMineID >= 0)
                 {
@@ -39,18 +39,18 @@ namespace EmeraldRush.Model.FirebaseModel
             {
                 Console.WriteLine("Mines are null in GetCurrent()");
             }
-                    
+
 
             return new Mine();
         }
 
         public PlayersPublic GetPlayerData(string playerUID)
         {
-            if(PlayersPublic != null)
-            for(int iter=0; iter< PlayersPublic.Length; iter++)
-            {
+            if (PlayersPublic != null)
+                for (int iter = 0; iter < PlayersPublic.Length; iter++)
+                {
                     if (PlayersPublic[iter].uid == playerUID) return PlayersPublic[iter];
-            }
+                }
 
             return null;
         }

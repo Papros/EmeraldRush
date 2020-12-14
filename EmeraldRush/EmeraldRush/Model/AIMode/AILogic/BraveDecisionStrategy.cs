@@ -1,9 +1,5 @@
-﻿using EmeraldRush.Model.AIMode.Game;
-using EmeraldRush.Model.FirebaseModel;
+﻿using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.AIMode.AILogic
 {
@@ -13,10 +9,10 @@ namespace EmeraldRush.Model.AIMode.AILogic
 
         public BraveDecisionStrategy(int diff)
         {
-            this.Difficult = diff;
+            Difficult = diff;
         }
 
-        public PlayerDecision makeDecision(GameInstance gameInstance, int playerID)
+        public PlayerDecision MakeDecision(GameInstance gameInstance, int playerID)
         {
             return PlayerDecision.GO_FURTHER;
         }

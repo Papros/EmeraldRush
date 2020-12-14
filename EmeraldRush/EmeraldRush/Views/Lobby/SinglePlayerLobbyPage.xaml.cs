@@ -1,10 +1,6 @@
 ﻿using EmeraldRush.ViewModels.Lobby;
 using EmeraldRush.Views.Game;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,36 +14,36 @@ namespace EmeraldRush.Views.Lobby
         public SinglePlayerLobbyPage()
         {
             InitializeComponent();
-            this.BindingContext = viewModel = new SinglePlayerLobbyViewModel();
+            BindingContext = viewModel = new SinglePlayerLobbyViewModel();
 
-            this.DecisionTimeSlider.Maximum = viewModel.maxDecisiontime;
-            this.DecisionTimeSlider.Minimum = viewModel.minDecisionTime;
-            this.DragonsDeepSlider.Maximum = viewModel.maxDragonsDeep;
-            this.DragonsDeepSlider.Minimum = viewModel.minDragonsDeep;
-            this.RoundNumberSlider.Maximum = viewModel.maxRoundNumber;
-            this.RoundNumberSlider.Minimum = viewModel.minRoundNumber;
-            this.diffSlider.Maximum = viewModel.maxDifficulty;
-            this.diffSlider.Minimum = viewModel.minDifficulty;
+            DecisionTimeSlider.Maximum = viewModel.maxDecisiontime;
+            DecisionTimeSlider.Minimum = viewModel.minDecisionTime;
+            DragonsDeepSlider.Maximum = viewModel.maxDragonsDeep;
+            DragonsDeepSlider.Minimum = viewModel.minDragonsDeep;
+            RoundNumberSlider.Maximum = viewModel.maxRoundNumber;
+            RoundNumberSlider.Minimum = viewModel.minRoundNumber;
+            diffSlider.Maximum = viewModel.maxDifficulty;
+            diffSlider.Minimum = viewModel.minDifficulty;
         }
 
         private void AddPlayer(object sender, EventArgs e)
         {
-            this.viewModel.AddAIPlayer();
+            viewModel.AddAIPlayer();
         }
 
         public void Done(object sender, EventArgs e)
         {
-            this.viewModel.selectionDone();
+            viewModel.IsSelectionDone();
         }
 
         public void BotRemoved(object sender, EventArgs e)
         {
-            this.viewModel.RemoveBot((sender as Button).BindingContext);
+            viewModel.RemoveBot((sender as Button).BindingContext);
         }
 
         private void StartSinglePlayerGame(object sender, EventArgs e)
         {
-            Device.BeginInvokeOnMainThread( () => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage(viewModel.GetGameManager())) );
+            Device.BeginInvokeOnMainThread(() => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage(viewModel.GetGameManager())));
         }
 
     }

@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using EmeraldRush.Model.FirebaseModel;
-using EmeraldRush.Model.GameEnum;
+﻿using EmeraldRush.Model.GameEnum;
 using Firebase.Database.Query;
+using System.Threading.Tasks;
 
 namespace EmeraldRush.Services.FirebaseDB
 {
@@ -11,7 +10,7 @@ namespace EmeraldRush.Services.FirebaseDB
         {
 
             //DecisionToken decision = new DecisionToken(goingFurtherDecision);
-            LogManager.Print("Send decision " + goingFurtherDecision.ToString()+":> "+ goingFurtherDecision, "DecisionManager");
+            LogManager.Print("Send decision " + goingFurtherDecision.ToString() + ":> " + goingFurtherDecision, "DecisionManager");
 
             await FirebaseManager.GetInstance().GetClient()
                 .Child(AplicationConstants.GAME_LIST)

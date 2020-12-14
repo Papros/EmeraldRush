@@ -1,14 +1,11 @@
 ﻿using EmeraldRush.Model.AIMode.Game;
 using EmeraldRush.Model.FirebaseModel;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.GameManager
 {
     class SinglePlayerGameManager : IGameManager
     {
-        Action<GameInstance> callback;
         SinglePlayerGameInstance GameInstance;
 
         public SinglePlayerGameManager(SinglePlayerGameConfig config)
@@ -28,8 +25,7 @@ namespace EmeraldRush.Model.GameManager
 
         public void Subscribe(Action<GameInstance> callback)
         {
-            this.callback = callback;
-            callback(GameInstance.GameInstance);
+            callback(GameInstance.PublicGameData);
             GameInstance.Start(callback);
             GameInstance.Next();
         }

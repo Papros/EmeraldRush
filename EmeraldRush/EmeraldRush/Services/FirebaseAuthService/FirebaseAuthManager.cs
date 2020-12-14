@@ -27,7 +27,7 @@ namespace EmeraldRush.Services.FirebaseAuthService
             {
                 return GetUserUID();
             }
-            else if( await Login() != string.Empty)
+            else if (await Login() != string.Empty)
             {
                 return GetUserUID();
             }

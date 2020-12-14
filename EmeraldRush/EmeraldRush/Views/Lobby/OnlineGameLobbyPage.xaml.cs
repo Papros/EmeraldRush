@@ -18,29 +18,29 @@ namespace EmeraldRush.Views.Lobby
         public OnlineGameLobbyPage()
         {
             InitializeComponent();
-            this.BindingContext = viewModel = new OnlineGameLobbyViewModel();
+            BindingContext = viewModel = new OnlineGameLobbyViewModel();
         }
 
         private void PlayerMode_2_Clicked(object sender, EventArgs e)
         {
-            Task.Run( () => this.viewModel.SignInToPlayersQueue(2, OpenViewPage) );
+            Task.Run(() => viewModel.SignInToPlayersQueue(2, OpenViewPage));
         }
 
         private void PlayerMode_4_Clicked(object sender, EventArgs e)
         {
-            Task.Run( () => this.viewModel.SignInToPlayersQueue(4, OpenViewPage) );
+            Task.Run(() => viewModel.SignInToPlayersQueue(4, OpenViewPage));
         }
 
         private void PlayerMode_8_Clicked(object sender, EventArgs e)
         {
-            Task.Run( () => this.viewModel.SignInToPlayersQueue(8, OpenViewPage) );
+            Task.Run(() => viewModel.SignInToPlayersQueue(8, OpenViewPage));
         }
 
         private void OpenViewPage(IGameManager manager)
         {
             LogManager.Print("Opening MainExploringPage from GameLobby");
-            Device.BeginInvokeOnMainThread( () => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage(manager)) );
-            
+            Device.BeginInvokeOnMainThread(() => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage(manager)));
+
         }
 
     }

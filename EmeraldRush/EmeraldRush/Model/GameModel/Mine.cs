@@ -10,12 +10,12 @@ namespace EmeraldRush.Model.GameModel
         public MineStatus MineState { get; set; }
         public List<int> Node { get; set; }
 
-        public Mine( )
+        public Mine()
         {
-            this.MineState = MineStatus.NOT_VISITED;
-            this.Node = new List<int>();
-            this.EmeraldsForTake = 0;
-            this.LastMoveTimestamp = 0;
+            MineState = MineStatus.NOT_VISITED;
+            Node = new List<int>();
+            EmeraldsForTake = 0;
+            LastMoveTimestamp = 0;
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
-using EmeraldRush.Services.FirebaseAuthService;
 using Firebase.Database.Query;
 using Firebase.Database.Streaming;
 using System;
@@ -30,32 +29,31 @@ namespace EmeraldRush.Services.FirebaseDB
 
         private FirebaseGameManager(string GameUID)
         {
-            this.GameUID = GameUID;
+            this.gameUID = GameUID;
         }
 
-        private string GameUID;
-        public IDisposable gameDisposble;
-
+        private string gameUID;
+        private IDisposable gameDisposble;
         private GameInstance gameCache;
 
         public bool SubscribeToGame(string gameUID = "")
         {
-            if(gameUID != "")
+            if (gameUID != "")
             {
-                this.GameUID = gameUID;
+                this.gameUID = gameUID;
             }
 
-            gameDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(this.GameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).AsObservable<GameInstance>().Subscribe(Job =>
+            gameDisposble = FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(gameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).AsObservable<GameInstance>().Subscribe(Job =>
             {
 
                 LogManager.Print("found some updates", "FirebaseGameManager");
                 if (Job.Object != null)
                 {
-                    if(Job.EventType == FirebaseEventType.InsertOrUpdate)
+                    if (Job.EventType == FirebaseEventType.InsertOrUpdate)
                     {
                         LogManager.Print("Game update", "FirebaseGameManager");
                         MessagingCenter.Send<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, Job.Object);
-                        this.gameCache = Job.Object;
+                        gameCache = Job.Object;
                     }
                     else
                     {
@@ -75,7 +73,7 @@ namespace EmeraldRush.Services.FirebaseDB
 
         public async Task<GameInstance> GetGame()
         {
-            this.gameCache = (await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(GameUID).Child(GameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).OnceSingleAsync<GameInstance>());
+            gameCache = (await FirebaseManager.GetInstance().GetClient().Child(AplicationConstants.GAME_LIST).Child(gameUID).Child(gameUID).Child(AplicationConstants.GAME_NODE).Child(AplicationConstants.PUBLIC_GAME_DATA).OnceSingleAsync<GameInstance>());
             return gameCache;
         }
 
@@ -86,7 +84,7 @@ namespace EmeraldRush.Services.FirebaseDB
 
         public void Unsubscribe()
         {
-            if(gameDisposble!= null)
+            if (gameDisposble != null)
             {
                 gameDisposble.Dispose();
             }

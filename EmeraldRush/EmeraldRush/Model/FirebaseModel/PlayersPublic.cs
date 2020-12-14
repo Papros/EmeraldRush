@@ -7,7 +7,7 @@ namespace EmeraldRush.Model.FirebaseModel
         public int chest { get; set; }
         public int emotion { get; set; }
         public int id { get; set; }
-        public string name { get;  set; }
+        public string name { get; set; }
         public int pocket { get; set; }
         public PlayerStatus status { get; set; }
         public string uid { get; set; }
@@ -19,9 +19,9 @@ namespace EmeraldRush.Model.FirebaseModel
             this.chest = chest;
             this.pocket = pocket;
             this.uid = uid;
-            this.emotion = 0;
-            this.status = PlayerStatus.EXPLORING;
-            
+            emotion = 0;
+            status = PlayerStatus.EXPLORING;
+
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace EmeraldRush.Views.Game
@@ -18,10 +15,10 @@ namespace EmeraldRush.Views.Game
 
             switch (player.status)
             {
-                case Model.GameEnum.PlayerStatus.DEAD: return this.PlayerDead;
-                case Model.GameEnum.PlayerStatus.EXPLORING: return this.PlayerExploring;
-                case Model.GameEnum.PlayerStatus.RESTING: return this.PlayerResting;
-                default: return this.PlayerExploring;
+                case Model.GameEnum.PlayerStatus.DEAD: return PlayerDead;
+                case Model.GameEnum.PlayerStatus.EXPLORING: return PlayerExploring;
+                case Model.GameEnum.PlayerStatus.RESTING: return PlayerResting;
+                default: return PlayerExploring;
             }
 
         }

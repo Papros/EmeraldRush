@@ -33,11 +33,11 @@ namespace EmeraldRush.Model.GameModel
 
             Cards[15] = new Card(15, CardType.DRAGON);
 
-            Cards[16] = new Card(16, CardType.ARTIFACT,12);
-            Cards[17] = new Card(17, CardType.ARTIFACT,10);
-            Cards[18] = new Card(18, CardType.ARTIFACT,8);
-            Cards[19] = new Card(19, CardType.ARTIFACT,7);
-            Cards[20] = new Card(20, CardType.ARTIFACT,5);
+            Cards[16] = new Card(16, CardType.ARTIFACT, 12);
+            Cards[17] = new Card(17, CardType.ARTIFACT, 10);
+            Cards[18] = new Card(18, CardType.ARTIFACT, 8);
+            Cards[19] = new Card(19, CardType.ARTIFACT, 7);
+            Cards[20] = new Card(20, CardType.ARTIFACT, 5);
 
 
             Cards[21] = new Card(21, CardType.EMERALDS, 1);
@@ -60,7 +60,7 @@ namespace EmeraldRush.Model.GameModel
 
         }
 
-        public Card GetCardOfID(int cardId)
+        public Card GetCard(int cardId)
         {
             return Cards[cardId];
         }
@@ -100,7 +100,7 @@ namespace EmeraldRush.Model.GameModel
 
         public Card[] GetThisDeck(int[] nodes)
         {
-            if(nodes != null)
+            if (nodes != null)
             {
                 Card[] resoultDeck = new Card[nodes.Length];
 
@@ -117,7 +117,7 @@ namespace EmeraldRush.Model.GameModel
                 Console.WriteLine("Card ids array null in GetThisDeck()");
                 return new Card[0];
             }
-            
+
         }
 
     }

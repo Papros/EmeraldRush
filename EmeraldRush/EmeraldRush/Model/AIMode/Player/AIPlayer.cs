@@ -1,7 +1,4 @@
 ﻿using EmeraldRush.Model.AIMode.AILogic;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EmeraldRush.Model.AIMode.Player
 {
@@ -11,12 +8,12 @@ namespace EmeraldRush.Model.AIMode.Player
         public int Difficult { get; set; }
         public GameStyle Style { get; set; }
         public IDecisionStrategy DecisionStrategy;
-        
+
         public AIPlayer(string name, int diff, GameStyle style)
         {
-            this.Name = name;
-            this.Difficult = diff;
-            this.Style = style;
+            Name = name;
+            Difficult = diff;
+            Style = style;
         }
     }
 }
