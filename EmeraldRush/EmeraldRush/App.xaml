@@ -173,6 +173,18 @@
                 <Setter Property="Padding" Value="0" />
             </Style>
 
+            <Style x:Key="Player_container_dead" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource brown_darker}" />
+            </Style>
+
+            <Style x:Key="Player_container_resting" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource blue_light}" />
+            </Style>
+
+            <Style x:Key="Player_container_exploring" TargetType="Frame" >
+                <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+            </Style>
+
             <Style x:Key="Player_info_container" TargetType="StackLayout">
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />

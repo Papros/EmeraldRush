@@ -4,13 +4,13 @@ namespace EmeraldRush.Model.FirebaseModel
 {
     class PlayersPublic
     {
-        public int chest { get; private set; }
-        public int emotion { get; private set; }
-        public int id { get; private set; }
-        public string name { get; private set; }
-        public int pocket { get; private set; }
-        public PlayerStatus status { get; private set; }
-        public string uid { get; private set; }
+        public int chest { get; set; }
+        public int emotion { get; set; }
+        public int id { get; set; }
+        public string name { get;  set; }
+        public int pocket { get; set; }
+        public PlayerStatus status { get; set; }
+        public string uid { get; set; }
 
         public PlayersPublic(int id, string name = "Adventurer", int chest = 0, int pocket = 0, string uid = "")
         {

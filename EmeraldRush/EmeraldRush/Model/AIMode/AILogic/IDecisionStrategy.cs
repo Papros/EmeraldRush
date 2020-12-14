@@ -1,4 +1,5 @@
 ﻿using EmeraldRush.Model.AIMode.Game;
+using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ namespace EmeraldRush.Model.AIMode.AILogic
 {
     interface IDecisionStrategy
     {
-        PlayerDecision makeDecision(SinglePlayerGameInstance gameInstance, int playerID);
+        int Difficult { get; set; }
+        PlayerDecision makeDecision(GameInstance gameInstance, int playerID);
     }
 }

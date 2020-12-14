@@ -5,11 +5,11 @@ using System.Text;
 
 namespace EmeraldRush.Model.GameManager
 {
-    public interface IGameManager
+    internal interface IGameManager
     {
-        public Action<GameInstance> GameUpdateCallback { get; set; }
-        void MakeDecision(bool decision, int PlayerID = -1, string GameUID = "");
+        void MakeDecision(bool decision, int PlayerID, string GameUID);
 
-        void Subscribe();
+        string GetUserUID();
+        void Subscribe(Action<GameInstance> callback);
     }
 }

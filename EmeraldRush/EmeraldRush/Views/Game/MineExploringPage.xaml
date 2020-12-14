@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EmeraldRush.Views.Game.MineExploringPage">
+             x:Class="EmeraldRush.Views.Game.MineExploringPage"
+             xmlns:customPlayerPanelSelector="clr-namespace:EmeraldRush.Views.Game" 
+             >
+
     <ContentPage.Content>
 
         <Grid  
@@ -134,7 +137,7 @@
                 Grid.Column="0"
                 Style="{StaticResource Player_carousel}"
                 ItemsSource="{Binding Adventurers}" >
-
+              
                 <CarouselView.ItemsLayout>
                     <LinearItemsLayout Orientation="Horizontal" />
                 </CarouselView.ItemsLayout>
@@ -144,19 +147,20 @@
                         <Frame Style="{StaticResource Player_carousel_page}">
                             <Frame Style="{StaticResource Player_container}">
                                 <StackLayout Style="{StaticResource Player_info_container}">
-                                    <Label Text="{Binding name}" Style="{StaticResource player_label}"/>
 
-                                    <Frame Style="{StaticResource Player_label_container}">
-                                        <StackLayout Style="{StaticResource label_container}">
-                                            <Image Source="chest_icon.png" Style="{StaticResource label_icon}"/>
-                                            <Label Text="{Binding chest}" Style="{StaticResource player_label}"/>
-                                        </StackLayout>
-                                    </Frame>
+                                    <StackLayout Style="{StaticResource label_container}">
+                                        <Label Text="{Binding name}" Style="{StaticResource player_label}"/>
+                                        <Image Source="{Binding statusSymbolPath}" Style="{StaticResource label_icon}"/>
+                                        <Image Source="chest_icon.png" Style="{StaticResource label_icon}"/>
+                                        <Label Text="{Binding chest}" Style="{StaticResource player_label}"/>
+                                    </StackLayout>
+
                                 </StackLayout>
                             </Frame>
                         </Frame>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
+
             </CarouselView>
 
             <Grid

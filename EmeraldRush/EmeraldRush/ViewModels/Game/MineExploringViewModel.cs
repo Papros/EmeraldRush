@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Player = EmeraldRush.Model.GameModel.Player;
 
 namespace EmeraldRush.ViewModels.Game
 {
@@ -31,8 +32,8 @@ namespace EmeraldRush.ViewModels.Game
             private set { SetProperty(ref mineIndex, value); }
         }
 
-        private PlayersPublic[] adventurers;
-        public PlayersPublic[] Adventurers
+        private Player[] adventurers;
+        public Player[] Adventurers
         {
             get { return adventurers; }
             private set { SetProperty(ref adventurers, value); }
@@ -79,11 +80,11 @@ namespace EmeraldRush.ViewModels.Game
         public MineExploringViewModel(Action<int> ScrollToNewCard, Action<int> AskForDecision, IGameManager manager)
         {
             this.GameManager = manager;
-            this.playerUID = FirebaseAuthManager.GetUserUID();
+            this.playerUID = manager.GetUserUID();
             this.ScrollToNewCard = ScrollToNewCard;
             this.AskForDecision = AskForDecision;
 
-            this.Adventurers = new PlayersPublic[0];
+            this.Adventurers = new Player[0];
             this.Nodes = new Card[0];
 
             this.Pocket = 0;
@@ -99,55 +100,7 @@ namespace EmeraldRush.ViewModels.Game
         private void InitializeObjects()
         {
             LogManager.Print("Game initalizing", "MineExploringVM");
-            Task.Run(async () =>
-            {
-
-                var data = await FirebaseGameManager.GetInstance().GetGame();
-                LogManager.Print("Game force update", "MineExploringVM");
-                if (data != null)
-                {
-                    this.UpdateData(data);
-                    ScrollToNewCard.Invoke(Nodes.Length - 1);
-                    if (makingDecision)
-                    {
-                        waitingForDecision = true;
-                        AskForDecision.Invoke(data.DecisionTime);
-                    }
-                    LogManager.Print("Game view updated.", "MineExploringVM");
-
-                }
-                else
-                {
-                    LogManager.Print("Null gameInstance", "MineExploringVM");
-                }
-
-            });
-
-
-            MessagingCenter.Subscribe<FirebaseGameManager, GameInstance>(this, AplicationConstants.GAME_UPDATE_MSG, (callback, data) =>
-            {
-                if (data != null)
-                {
-                    this.UpdateData(data);
-                    ScrollToNewCard.Invoke(Nodes.Length - 1);
-                    if (makingDecision)
-                    {
-                        waitingForDecision = true;
-                        AskForDecision.Invoke(data.DecisionTime);
-                    }
-                    else
-                    {
-                        waitingForDecision = false;
-                    }
-                    LogManager.Print("Game view updated.", "MineExploringVM");
-
-                }
-                else
-                {
-                    LogManager.Print("Null gameInstance", "MineExploringVM");
-                }
-
-            });
+            GameManager.Subscribe(UpdateData);           
         }
 
         private void UpdateData(GameInstance gameInstance)
@@ -160,12 +113,17 @@ namespace EmeraldRush.ViewModels.Game
 
                 if (gameInstance.PlayersPublic != null)
                 {
-                    this.Adventurers = gameInstance.PlayersPublic;
+                    var adventurers = new Player[gameInstance.PlayersPublic.Length];
+                    for(int iter = 0; iter < Adventurers.Length; iter++)
+                    {
+                        adventurers[iter] = new Player(gameInstance.PlayersPublic[iter]);
+                    }
+                    this.Adventurers = adventurers;
                 }
 
                 if (gameInstance.GetCurrent() != null)
                 {
-                    this.Nodes = (new Card[]{new Card(-1,CardType.ENTRY)}).Concat(deck.GetThisDeck(gameInstance.GetCurrent().Node)).ToArray();
+                    this.Nodes = (new Card[]{new Card(-1,CardType.ENTRY)}).Concat(deck.GetThisDeck(gameInstance.GetCurrent().Node.ToArray())).ToArray();
                 }
 
                 this.MineIndex = (gameInstance.CurrentMineID + 1).ToString() + " / " + gameInstance.MineNumber.ToString();
@@ -183,9 +141,19 @@ namespace EmeraldRush.ViewModels.Game
                     this.Pocket = player.pocket;
                     this.Chest = player.chest;
                     this.playerID = player.id;
-                    this.makingDecision = (player.status == PlayerStatus.EXPLORING );
+                    this.makingDecision = (player.status == PlayerStatus.EXPLORING && gameInstance.PublicState == GameStatus.WAITING_FOR_MOVE);
                 }
 
+                ScrollToNewCard.Invoke(Nodes.Length - 1);
+                if (makingDecision)
+                {
+                    waitingForDecision = true;
+                    AskForDecision.Invoke(gameInstance.DecisionTime);
+                }
+                else
+                {
+                    waitingForDecision = false;
+                }
 
             }
 
@@ -195,14 +163,7 @@ namespace EmeraldRush.ViewModels.Game
         {
             waitingForDecision = false;
 
-            if (decision)
-            {
-                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_FURTHER));
-            }
-            else
-            {
-                Task.Run(() => DecisionManager.SendDecision(this.GameUID, this.playerID, PlayerDecision.GO_BACK));
-            }
+            GameManager.MakeDecision(decision, this.playerID, this.GameUID);
 
         }
 

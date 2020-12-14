@@ -1,23 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="PageRoot"
              x:Class="EmeraldRush.Views.Lobby.SinglePlayerLobbyPage">
+    
     <ContentPage.Content>
         <StackLayout>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="2*" />
-                    <RowDefinition Height="10*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
 
             <Label Text="Single player" />
 
@@ -50,18 +38,30 @@
                 <Label Text="{Binding PlayerNumber}" />
             </StackLayout>
 
-            <ListView ItemsSource="{Binding Bots}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Name}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+            
+            <StackLayout IsVisible="{Binding IsSelected}">
+                <Entry Text="{Binding SelectedName}" />
+                <Label Text="{Binding SelectedDiff}" />
+                <Slider x:Name="diffSlider" Value="{Binding SelectedDiff}"/>
+                <Picker ItemsSource="{Binding StyleList}" ItemDisplayBinding="{Binding}" SelectedIndex="{Binding StyleIndex}" />
+                <Button Text="Done" Clicked="Done" />
+            </StackLayout> 
 
-            </ListView>
+            
+            <CollectionView ItemsSource="{Binding Bots}"  SelectedItem="{Binding Selected}" SelectionMode="Single" x:Name="BotList" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}"/>
+                            <Label Text="Int: " />
+                            <Label Text="{Binding Difficult}" />
+                            <Label Text="{Binding Style}" />
+                            <Button Text="X" Clicked="BotRemoved" BindingContext="{Binding .}" HorizontalOptions="End" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView> 
 
             <Button Text="START GAME" Clicked="StartSinglePlayerGame"/>
 

@@ -1,4 +1,5 @@
 ﻿using EmeraldRush.Model.AIMode.Game;
+using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,17 @@ namespace EmeraldRush.Model.AIMode.AILogic
 {
     class RandomDecisionStrategy : IDecisionStrategy
     {
-        public PlayerDecision makeDecision(SinglePlayerGameInstance gameInstance, int playerID)
+        public int Difficult { get; set; }
+
+        public RandomDecisionStrategy(int diff)
+        {
+            this.Difficult = diff;
+        }
+
+        public PlayerDecision makeDecision(GameInstance gameInstance, int playerID)
         {
             Random rand = new Random();
-            bool decision = ( rand.Next(0, 1) == 1);
+            bool decision = (rand.NextDouble() * 10 > 3);
 
             if (decision)
             {

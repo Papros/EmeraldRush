@@ -16,7 +16,9 @@ namespace EmeraldRush.Model.GameModel
             this.EmeraldValue = emeraldsValue;
             this.CardID = cardID;
             this.Type = type;
-            this.Title = type.ToString();
+            this.Title = (this.Type == CardType.ARTIFACT || this.Type == CardType.EMERALDS ? this.EmeraldValue+" " : "") + type.ToString();
+
+        
             switch (type)
             {
                 case CardType.ENTRY: ImagePath = "mine_entry.png"; break;

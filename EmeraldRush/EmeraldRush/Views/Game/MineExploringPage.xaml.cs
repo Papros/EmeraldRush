@@ -13,7 +13,7 @@ namespace EmeraldRush.Views.Game
     public partial class MineExploringPage : ContentPage
     {
         readonly MineExploringViewModel viewModel;
-        public MineExploringPage(IGameManager manager)
+        internal MineExploringPage(IGameManager manager)
         {
             InitializeComponent();
 

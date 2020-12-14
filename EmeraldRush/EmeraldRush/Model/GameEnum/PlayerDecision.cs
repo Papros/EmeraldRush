@@ -2,6 +2,6 @@
 {
     enum PlayerDecision
     {
-        GO_BACK, GO_FURTHER
+        GO_BACK, GO_FURTHER, UNKNOWN
     }
 }

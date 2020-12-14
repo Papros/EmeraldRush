@@ -1,5 +1,6 @@
 ﻿using EmeraldRush.Model.GameEnum;
 using System;
+using System.Collections.Generic;
 
 namespace EmeraldRush.Model.GameModel
 {
@@ -62,6 +63,24 @@ namespace EmeraldRush.Model.GameModel
         public Card GetCardOfID(int cardId)
         {
             return Cards[cardId];
+        }
+
+        public Card GetRandomCard(List<int> removed, List<int> played, bool dragon)
+        {
+            Card[] filterCards = Array.FindAll(Cards, card => !(removed.Contains(card.CardID) || played.Contains(card.CardID)));
+            Random rng = new Random();
+            int n = filterCards.Length;
+            int random = rng.Next(n);
+
+            if (!dragon)
+            {
+                while (filterCards[random].Type.Equals(CardType.DRAGON))
+                {
+                    random = rng.Next(n);
+                }
+            }
+
+            return filterCards[random];
         }
 
         public bool IsTrap(int index)
