@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="EmeraldRush.Styles.MainMenuStyles"
+                    xmlns:local ="clr-namespace:EmeraldRush.Styles">
+
+    <ResourceDictionary.MergedDictionaries>
+            <local:ColorPalette/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="Main_Menu_Box" TargetType="StackLayout" >
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+        <Setter Property="Padding" Value="20,40" />
+    </Style>
+
+    <Style x:Key="Main_Menu_Options" TargetType="Button">
+        <Setter Property="FontSize" Value="Title" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="CharacterSpacing" Value="0" />
+        <Setter Property="Padding" Value="10,20,10,20" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+    </Style>
+
+    <Style x:Key="MenuTitle" TargetType="Label">
+        <Setter Property="FontSize" Value="Title" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="CharacterSpacing" Value="4" />
+        <Setter Property="Padding" Value="20,40" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+    
+</ResourceDictionary>

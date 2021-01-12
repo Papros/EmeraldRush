@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="EmeraldRush.Styles.ColorPalette">
+
+    <Color x:Key="green_dark">#1f240a</Color>
+    <Color x:Key="green">#39571c</Color>
+    <Color x:Key="green_light">#a58c27</Color>
+
+    <Color x:Key="brown">#45230d</Color>
+    <Color x:Key="brown_light">#773421</Color>
+    <Color x:Key="brown_dark">#36170c</Color>
+    <Color x:Key="brown_darker">#26170c</Color>
+
+    <Color x:Key="blue">#276468</Color>
+    <Color x:Key="blue_light">#3c9f9c</Color>
+    <Color x:Key="blue_dark">#183f39</Color>
+    <Color x:Key="blue_darker">#082f29</Color>
+
+    <Color x:Key="beige">#efb775</Color>
+    <Color x:Key="beige_light">#efd8a1</Color>
+    <Color x:Key="beige_dark">#684c3c</Color>
+
+    <Color x:Key="orange">#ef692f</Color>
+    <Color x:Key="orange_light">#ef802f</Color>
+    <Color x:Key="orange_dark">#ef3a0c</Color>
+
+    <Color x:Key="grey">#424242</Color>
+    <Color x:Key="grey_light">#828282</Color>
+    <Color x:Key="grey_darker">#222222</Color>
+
+    <Color x:Key="red">#911919</Color>
+    <Color x:Key="red_light">#d24242</Color>
+    <Color x:Key="red_dark">#6c0c0c</Color>
+
+</ResourceDictionary>

@@ -1,4 +1,5 @@
 ﻿using EmeraldRush.ViewModels.Menu;
+using EmeraldRush.Views.Instruction;
 using EmeraldRush.Views.Lobby;
 using System;
 
@@ -31,6 +32,11 @@ namespace EmeraldRush.Views.Menu
         private void AI_Mode_Selected(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new SinglePlayerLobbyPage());
+        }
+
+        private void Tutorial_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new InstructionsPage());
         }
     }
 }

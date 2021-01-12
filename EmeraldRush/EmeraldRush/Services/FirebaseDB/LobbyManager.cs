@@ -16,7 +16,10 @@ namespace EmeraldRush.Services.FirebaseDB
         {
             if (UserUID != string.Empty)
             {
-                Player player = new Player(string.Empty, "Adventurer", UserUID);
+                
+                Player player = new Player(string.Empty, 
+                                            new Model.SettingsManager.SettingManager().GetValue(Model.SettingsManager.SettingsKey.NAME,"Adventurer"),
+                                              UserUID);
 
                 try
                 {

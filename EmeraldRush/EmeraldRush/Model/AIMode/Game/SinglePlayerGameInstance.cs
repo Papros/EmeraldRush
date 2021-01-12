@@ -81,7 +81,7 @@ namespace EmeraldRush.Model.AIMode.Game
         {
             LogManager.Print("gs(" + PublicGameData.RoundID + "): " + PublicGameData.PublicState.ToString(), "SinglePlayerGameInstance");
 
-            if (PublicGameData.PublicState == GameStatus.WAITING_FOR_FIRST)
+            if (PublicGameData.PublicState == GameStatus.WAITING_FOR_FIRST )
             {
                 PlayFirstCard();
             }
@@ -102,6 +102,9 @@ namespace EmeraldRush.Model.AIMode.Game
             else if (PublicGameData.PublicState == GameStatus.ROUND_SUMMARY)
             {
                 LogManager.Print("time for round summary", "SinglePlayerGameInstance");
+                PublicGameData.PublicState = GameStatus.WAITING_FOR_FIRST;
+
+
                 ScheduleNextMove(PublicGameData.RoundCooldownTime + decisionTimeTolerance);
             }
 
@@ -369,12 +372,6 @@ namespace EmeraldRush.Model.AIMode.Game
                     if (PublicGameData.PublicState == GameStatus.WAITING_FOR_MOVE)
                         LetBotsDecide(PublicGameData);
 
-                    string dec = "";
-                    foreach (PlayerDecision decision in playersDecisions)
-                    {
-                        dec += decision.ToString() + "; ";
-                    }
-                    Console.WriteLine(dec);
                     Next();
                 }
 

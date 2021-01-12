@@ -2,11 +2,49 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EmeraldRush.Views.Menu.SettingsPage">
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Style="{StaticResource Outer_container}">
+            
+            <Label Text="Settings" Style="{StaticResource Page_title}"/>
+
+            <StackLayout Style="{StaticResource Inner_container}">
+                
+                <Frame Style="{StaticResource Horizontal_line}"/>
+
+                <StackLayout>
+                    <Label Text="Your name:" Style="{StaticResource ValueTitle}"/>
+                    <Entry Text="{Binding AdventurerName}" Style="{StaticResource Name_entry}"/>
+                </StackLayout>
+
+                <Frame Style="{StaticResource Horizontal_line}"/>
+
+                <StackLayout Style="{StaticResource Value_holder}">
+                    <Label Text="Music level:" Style="{StaticResource ValueTitle}"/>
+                    <Label Text="{Binding MusicLevelLabel}" Style="{StaticResource ValueLabel}"/>
+                </StackLayout>
+                <Slider x:Name="MusicLevelSlider"  Value="{Binding MusicLevel}" Style="{StaticResource Value_slider}"/>
+
+                <Frame Style="{StaticResource Horizontal_line}"/>
+
+                <StackLayout Style="{StaticResource Value_holder}">
+                    <Label Text="Vibration:" Style="{StaticResource ValueTitle}"/>
+                    <CheckBox Style="{StaticResource Value_check_box}" IsChecked="{Binding Vibration}"/>
+                </StackLayout>
+
+                <Frame Style="{StaticResource Horizontal_line}"/>
+
+                <StackLayout Style="{StaticResource Value_holder}">
+                    <Label Text="Decision box dissapears:" Style="{StaticResource ValueTitle}"/>
+                    <CheckBox Style="{StaticResource Value_check_box}" IsChecked="{Binding DecisionBoxDisapears}"/>
+                </StackLayout>
+
+                <Frame Style="{StaticResource Horizontal_line}"/>
+                
+            </StackLayout>
+
+            <Button Text="Menu" Style="{StaticResource Menu_button}" Clicked="Button_Menu"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

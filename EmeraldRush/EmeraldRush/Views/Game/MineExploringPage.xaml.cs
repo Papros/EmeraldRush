@@ -21,23 +21,21 @@ namespace EmeraldRush.Views.Game
 
         public void ScrollToLowerCard(int position)
         {
-            CardCarousel.ScrollTo(position);
+            //CardCarousel.ScrollTo(position);
             if (DecisionBox.IsVisible) DecisionBox.RaiseChild(Content);
         }
 
-        public async void AskForDecision(int decisionTime)
+        public void AskForDecision(int decisionTime)
         {
 
             Device.BeginInvokeOnMainThread(async () =>
             {
-                //DecisionBox.IsVisible = true;
-
+                if (viewModel.DecisionBoxDisapearing) DecisionBox.IsVisible = true;
                 CardCarousel.Focus();
                 timeBar.Focus();
                 timeBar.Progress = 1;
                 await timeBar.ProgressTo(0, (uint)decisionTime * 1000, Easing.Linear);
-
-                //DecisionBox.IsVisible = false;
+                if (viewModel.DecisionBoxDisapearing) DecisionBox.IsVisible = false;
             });
 
         }
@@ -45,13 +43,21 @@ namespace EmeraldRush.Views.Game
         private void Decision_No_Clicked(object sender, EventArgs e)
         {
             viewModel.MakeDecision(false);
-            // Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
+            if(viewModel.DecisionBoxDisapearing)  Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
         }
 
         private void Decision_Yes_Clicked(object sender, EventArgs e)
         {
             viewModel.MakeDecision(true);
-            //Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
+            if (viewModel.DecisionBoxDisapearing) Device.BeginInvokeOnMainThread(() => DecisionBox.IsVisible = false);
+        }
+
+        private void Return_to_menu(object sender, EventArgs e)
+        {
+            Device.BeginInvokeOnMainThread( () => {
+                (Application.Current.MainPage).Navigation.PopModalAsync(true);
+            });
+
         }
     }
 }

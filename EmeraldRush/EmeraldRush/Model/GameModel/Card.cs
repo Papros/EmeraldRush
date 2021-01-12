@@ -21,15 +21,15 @@ namespace EmeraldRush.Model.GameModel
 
             switch (type)
             {
-                case CardType.ENTRY: ImagePath = "mine_entry.png"; break;
-                case CardType.DRAGON: ImagePath = "dragon.png"; break;
-                case CardType.EMERALDS: ImagePath = "cave.png"; break;
-                case CardType.LAVA: ImagePath = "lava.png"; break;
-                case CardType.ROCKS: ImagePath = "toxic.png"; break;
-                case CardType.SPIDERS: ImagePath = "spiders.png"; break;
-                case CardType.SNAKES: ImagePath = "snakes.png"; break;
-                case CardType.TRAP: ImagePath = "trap.png"; break;
-                case CardType.ARTIFACT: ImagePath = "cave.png"; break;
+                case CardType.ENTRY: ImagePath = "card_tile_entry.png"; break;
+                case CardType.DRAGON: ImagePath = "card_tile_dragon.png"; break;
+                case CardType.EMERALDS: ImagePath = "card_tile_emerald.png"; break;
+                case CardType.LAVA: ImagePath = "card_tile_lava.png"; break;
+                case CardType.TOXIC: ImagePath = "card_tile_toxic.png"; break;
+                case CardType.SPIDERS: ImagePath = "card_tile_spiders.png"; break;
+                case CardType.SNAKES: ImagePath = "card_tile_snakes.png"; break;
+                case CardType.TRAP: ImagePath = "card_tile_trap.png"; break;
+                case CardType.ARTIFACT: ImagePath = "card_tile_emerald.png"; break;
             }
         }
 

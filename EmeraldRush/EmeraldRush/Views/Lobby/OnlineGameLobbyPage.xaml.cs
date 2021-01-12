@@ -43,5 +43,12 @@ namespace EmeraldRush.Views.Lobby
 
         }
 
+        private void Menu_Clicked(object sender, System.EventArgs e)
+        {
+            Device.BeginInvokeOnMainThread(() => {
+                (Application.Current.MainPage).Navigation.PopModalAsync(true);
+            });
+        }
+
     }
 }

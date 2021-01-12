@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="EmeraldRush.Styles.OnlineGameLobbyStyles"
+                    xmlns:local="clr-namespace:EmeraldRush.Styles"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <local:ColorPalette/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="Lobby_status" TargetType="Label" >
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="Margin" Value="0, 30" />
+    </Style>
+    
+    <Style x:Key="Game_options_button" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource green}" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Online_game_frame" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+    </Style>
+    
+</ResourceDictionary>

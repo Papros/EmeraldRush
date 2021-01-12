@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="EmeraldRush.Styles.SettingsStyle"
+                    xmlns:local="clr-namespace:EmeraldRush.Styles"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <local:ColorPalette/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="Page_title" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+    
+    <Style x:Key="Horizontal_line" TargetType="Frame" >
+        <Setter Property="BorderColor" Value="{StaticResource green_dark}" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Margin" Value="0,10" />
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <Style x:Key="Value_check_box" TargetType="CheckBox" >
+        <Setter Property="Color" Value="{StaticResource green_light}" />
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="EndAndExpand" />
+        <Setter Property="Margin" Value="0,0,40,0" />
+    </Style>
+
+    <Style x:Key="Inner_container" TargetType="StackLayout">
+        <Setter Property="Padding" Value="10,0" />
+    </Style>
+
+    <Style x:Key="Outer_container" TargetType="StackLayout">
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <Style x:Key="Menu_button" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+        <Setter Property="TextColor" Value="{StaticResource beige}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="VerticalOptions" Value="EndAndExpand" />
+        <Setter Property="Margin" Value="20,0,20,10" />
+    </Style>
+
+    <Style x:Key="Tutorial_carousel" TargetType="CarouselView">
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+    </Style>
+
+    <Style x:Key="Tutorial_panel" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+    </Style>
+    
+</ResourceDictionary>

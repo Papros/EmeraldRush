@@ -44,6 +44,18 @@ namespace EmeraldRush.Model.FirebaseModel
             return new Mine();
         }
 
+        public Mine PreviousMine()
+        {
+            if(CurrentMineID > 0)
+            {
+                return Mines[CurrentMineID - 1];
+            }
+            else
+            {
+                return Mines[CurrentMineID];
+            }
+        }
+
         public PlayersPublic GetPlayerData(string playerUID)
         {
             if (PlayersPublic != null)

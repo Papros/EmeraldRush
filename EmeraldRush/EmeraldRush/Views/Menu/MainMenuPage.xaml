@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="false"
              x:Class="EmeraldRush.Views.Menu.MainMenuPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Style="{StaticResource Main_Menu_Box}">
 
-            <Label Text="Emerald Rush" />
+            <Label Style="{StaticResource MenuTitle}" Text="Emerald Rush" />
 
-            <Button Text="Play vs. AI" Clicked="AI_Mode_Selected" />
+            <Button Style="{StaticResource Main_Menu_Options}" Text="Play vs. AI" Clicked="AI_Mode_Selected" />
 
-            <Button Text="Play With Others!" Clicked="Multiplayer_Clicked" />
+            <Button Style="{StaticResource Main_Menu_Options}" Text="Play With Others!" Clicked="Multiplayer_Clicked" />
 
-            <Button Text="Settings" Clicked="Settings_Clicked" />
+            <Button Style="{StaticResource Main_Menu_Options}" Text="Settings" Clicked="Settings_Clicked" />
+
+            <Button Style="{StaticResource Main_Menu_Options}" Text="How to play" Clicked="Tutorial_Clicked" />
 
         </StackLayout>
     </ContentPage.Content>

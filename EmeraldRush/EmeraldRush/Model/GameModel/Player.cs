@@ -1,9 +1,10 @@
 ﻿using EmeraldRush.Model.FirebaseModel;
 using EmeraldRush.Model.GameEnum;
+using System;
 
 namespace EmeraldRush.Model.GameModel
 {
-    class Player
+    class Player : IComparable
     {
         public int chest { get; set; }
         public int emotion { get; set; }
@@ -22,10 +23,15 @@ namespace EmeraldRush.Model.GameModel
 
             switch (status)
             {
-                case PlayerStatus.DEAD: statusSymbolPath = "deadSymbol.png"; break;
-                case PlayerStatus.EXPLORING: statusSymbolPath = "exploringSymbol.png"; break;
-                case PlayerStatus.RESTING: statusSymbolPath = "restingSymbol.png"; break;
+                case PlayerStatus.DEAD: statusSymbolPath = "player_status_dead.png"; break;
+                case PlayerStatus.EXPLORING: statusSymbolPath = "player_status_exploring.png"; break;
+                case PlayerStatus.RESTING: statusSymbolPath = "player_status_resting.png"; break;
             }
+        }
+
+        public int CompareTo(object obj)
+        {
+            return (obj as Player).chest.CompareTo(chest);
         }
     }
 }

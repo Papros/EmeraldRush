@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="EmeraldRush.Styles.SinglePlayerLobbyStyles"
+                    xmlns:local="clr-namespace:EmeraldRush.Styles"
+                    >
+
+    <ResourceDictionary.MergedDictionaries>
+        <local:ColorPalette/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="Main_frame" TargetType="StackLayout" >
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+    </Style>
+
+    <Style x:Key="Single_bot_line" TargetType="StackLayout" >
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="4,2" />
+        <Setter Property="BackgroundColor" Value="{StaticResource brown}" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <Style x:Key="Single_bot_outer_line" TargetType="Frame">
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <Style x:Key="Bot_list" TargetType="CollectionView" >
+        <Setter Property="BackgroundColor" Value="{StaticResource beige_dark}" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Always" />
+        <Setter Property="ItemsUpdatingScrollMode" Value="KeepScrollOffset" />
+        <Setter Property="Margin" Value="5,0" />
+    </Style>
+    
+    <Style x:Key="Remove_button" TargetType="Button" >
+        <Setter Property="BackgroundColor" Value="{StaticResource red_dark}" />
+        <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="0,0,10,0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="Start_Game" TargetType="Button" >
+        <Setter Property="BackgroundColor" Value="{StaticResource green}" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Add_bot" TargetType="Button" >
+        <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="40,0" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Done" TargetType="Button" >
+        <Setter Property="BackgroundColor" Value="{StaticResource green_dark}" />
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="40,0" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="Bot_label" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+    </Style>
+
+    <Style x:Key="Vertical_separator_bar" TargetType="Frame">
+        <Setter Property="BorderColor" Value="{StaticResource brown_darker}" />
+    </Style>
+
+    <Style x:Key="Game_Style_Picker" TargetType="Picker">
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="TitleColor" Value="{StaticResource beige}" />
+    </Style>
+
+    <Style x:Key="Name_entry" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource beige_light}"/>
+        <Setter Property="PlaceholderColor"  Value="{StaticResource beige_light}"/>
+    </Style>
+
+    <Style x:Key="Value_slider" TargetType="Slider">
+        <Setter Property="ThumbColor" Value="{StaticResource green_light}" />
+        <Setter Property="MinimumTrackColor" Value="{StaticResource blue_light}" />
+        <Setter Property="MaximumTrackColor" Value="{StaticResource blue_darker}" />
+    </Style>
+
+    <Style x:Key="Title" TargetType="Label" >
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <Style x:Key="ValueTitle" TargetType="Label" >
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+    </Style>
+
+    <Style x:Key="ValueLabel" TargetType="Label" >
+        <Setter Property="TextColor" Value="{StaticResource beige_light}" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+    </Style>
+
+    <Style x:Key="Value_holder" TargetType="StackLayout" >
+        <Setter Property="Orientation" Value="Horizontal" />
+    </Style>
+
+
+</ResourceDictionary>

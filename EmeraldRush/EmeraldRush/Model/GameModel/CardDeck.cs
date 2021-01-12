@@ -15,9 +15,9 @@ namespace EmeraldRush.Model.GameModel
             Cards[1] = new Card(1, CardType.LAVA);
             Cards[2] = new Card(2, CardType.LAVA);
 
-            Cards[3] = new Card(3, CardType.ROCKS);
-            Cards[4] = new Card(4, CardType.ROCKS);
-            Cards[5] = new Card(5, CardType.ROCKS);
+            Cards[3] = new Card(3, CardType.TOXIC);
+            Cards[4] = new Card(4, CardType.TOXIC);
+            Cards[5] = new Card(5, CardType.TOXIC);
 
             Cards[6] = new Card(6, CardType.SNAKES);
             Cards[7] = new Card(7, CardType.SNAKES);

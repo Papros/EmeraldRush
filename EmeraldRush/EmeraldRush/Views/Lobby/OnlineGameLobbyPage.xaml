@@ -1,16 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="PageRoot"
              x:Class="EmeraldRush.Views.Lobby.OnlineGameLobbyPage">
+    
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Style="{StaticResource Online_game_frame}">
 
-            <Label Text="{Binding LobbyStatus} " />
+            <Label Text="{Binding LobbyStatus} " Style="{StaticResource Lobby_status}"/>
 
-            <Button Text="2 Player mode" Clicked="PlayerMode_2_Clicked" />
-            <Button Text="4 Player mode" Clicked="PlayerMode_4_Clicked" />
-            <Button Text="8 Player mode" Clicked="PlayerMode_8_Clicked" />
+            <Button Text="2 Player mode" Clicked="PlayerMode_2_Clicked" Style="{StaticResource Game_options_button}"/>
+            <Button Text="4 Player mode" Clicked="PlayerMode_4_Clicked" Style="{StaticResource Game_options_button}"/>
+            <Button Text="8 Player mode" Clicked="PlayerMode_8_Clicked" Style="{StaticResource Game_options_button}"/>
 
+            <Label Text="{Binding AdventurerName}" Style="{StaticResource Lobby_status}" />
+
+            <Button Text="Menu" Style="{StaticResource Menu_button}" Clicked="Menu_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

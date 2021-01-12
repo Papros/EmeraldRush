@@ -46,5 +46,11 @@ namespace EmeraldRush.Views.Lobby
             Device.BeginInvokeOnMainThread(() => (Application.Current.MainPage).Navigation.PushModalAsync(new MineExploringPage(viewModel.GetGameManager())));
         }
 
+        private void Button_Menu(object sender, EventArgs e)
+        {
+            Device.BeginInvokeOnMainThread(() => {
+                (Application.Current.MainPage).Navigation.PopModalAsync(true);
+            });
+        }
     }
 }

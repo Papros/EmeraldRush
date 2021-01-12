@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmeraldRush.Views.Instruction.InstructionsPage">
+    <ContentPage.Content>
+        <StackLayout Style="{StaticResource Main_frame}">
+
+
+            <Label Text="Instructions"  Style="{StaticResource MenuTitle}"/>
+            <CarouselView ItemsSource="{Binding TutorialPanel}" Style="{StaticResource Tutorial_carousel}">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CarouselView.ItemsLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Style="{StaticResource Card_container}" >
+                            <Label Text="{Binding TipText}" VerticalOptions="EndAndExpand" Style="{StaticResource Card_title}" />
+                            <Image Source="{Binding ImagePath}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <Label Text="Swipe to navigate..." Style="{StaticResource Page_title}"/>
+            <Button Text="Menu" Clicked="Menu_Clicked" Style="{StaticResource Menu_button}"/>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

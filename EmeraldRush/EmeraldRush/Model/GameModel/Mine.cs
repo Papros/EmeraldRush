@@ -18,5 +18,10 @@ namespace EmeraldRush.Model.GameModel
             LastMoveTimestamp = 0;
         }
 
+        public int GetLastCardID()
+        {
+            return Node[Node.Count - 1];
+        }
+
     }
 }
